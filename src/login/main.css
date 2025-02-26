@@ -1,0 +1,257 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Barlow:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap');
+
+body {
+    font-family: "Barlow", sans-serif;
+}
+
+body.kcBodyClass {
+    background: rgb(205, 207, 211);
+}
+
+.kcHeaderWrapperClass {
+    @apply
+    mx-auto
+    w-full
+    max-w-sm
+    mt-[25vh]
+    flex
+    justify-center
+}
+
+.kcInputClass, .kcTextareaClass {
+    @apply
+    block
+    w-full
+    rounded-md
+    bg-white
+    px-3
+    py-1.5
+    text-base
+    text-gray-900
+    border
+    border-gray-300
+    placeholder:text-gray-400
+    sm:text-sm/6
+    focus:outline-2
+    focus:-outline-offset-2
+    focus:outline-blue-900
+}
+
+.kcFormCardClass {
+    @apply
+    rounded-lg
+    relative
+}
+
+.kcInfoAreaWrapperClass {
+    @apply
+    rounded-b-md
+}
+
+.kcInputGroup {
+    @apply
+    rounded-md
+    outline-1
+    -outline-offset-1
+    outline-gray-300
+    has-[input:focus-within]:outline-2
+    has-[input:focus-within]:-outline-offset-2
+    has-[input:focus-within]:outline-blue-900
+}
+
+input[name="password"], input[name="password-confirm"], input[name="password-new"] {
+    @apply
+    rounded-r-none
+    border-r-0
+}
+
+.kcFormPasswordVisibilityButtonClass {
+    @apply
+    border
+    border-l-0
+    rounded-r-md
+    w-[10%]
+    border-gray-300
+}
+
+.kcButtonClass {
+    @apply
+    flex
+    w-full
+    justify-center
+    rounded-md
+    px-3
+    py-1.5
+    text-sm/6
+    font-semibold
+    shadow-xs
+    mt-4
+}
+
+.kcButtonDefaultClass {
+    @apply
+    text-black
+    bg-gray-300
+    hover:bg-gray-200
+}
+
+.kcButtonPrimaryClass {
+    @apply
+    text-white
+    bg-blue-950
+    hover:bg-blue-900
+}
+
+.kcLocaleListClass {
+    @apply
+    absolute
+    z-10
+    mt-1
+    max-h-60
+    w-[40%]
+    overflow-auto
+    rounded-md
+    bg-white
+    py-1
+    text-base
+    ring-1
+    shadow-lg
+    ring-black/5
+    focus:outline-hidden
+    sm:text-sm
+}
+
+.kcLocaleDropDownClass {
+    @apply
+    text-left
+    rounded-md
+    bg-white
+    py-1.5
+    pr-2
+    pl-3
+    text-gray-900
+    outline-1
+    -outline-offset-1
+    outline-gray-300
+    sm:text-sm/6
+}
+
+button#kc-current-locale-link::after {
+    content: '';
+}
+
+.kcLocaleListClass {
+    @apply
+    absolute
+    z-10
+    right-0
+    mt-1
+    w-40
+    max-h-60
+    overflow-auto
+    rounded-md
+    py-1
+    shadow-lg
+}
+
+#kc-locale ul {
+    @apply
+    top-8
+}
+
+#kc-locale-dropdown a {
+    @apply
+    text-left
+}
+
+.kcSelectAuthListItemDescriptionClass {
+    @apply
+    flex
+    space-x-2
+}
+
+.otpCredentialsWrapperClass {
+    @apply
+    flex
+    flex-wrap
+    items-center
+    space-x-4
+    px-5
+    w-full
+    mb-4
+}
+
+.otpCredentialItem {
+    @apply
+    p-2
+    mt-4
+    flex
+    items-center
+    border
+    border-gray-300
+    rounded-md
+    w-1/4
+    mb-0
+    cursor-pointer
+}
+
+.otpInputLabel {
+    @apply
+    ml-3
+    font-medium
+    text-gray-900
+    m-0
+}
+
+.otpCredentialInputCheck {
+    @apply
+    appearance-none
+    relative
+    size-4
+    rounded-full
+    border
+    border-gray-300
+    bg-white
+    before:absolute
+    before:inset-1
+    before:rounded-full
+    before:bg-white
+    not-checked:before:hidden
+    checked:border-blue-950
+    checked:bg-blue-950
+    focus-visible:outline-2
+    focus-visible:outline-offset-2
+    focus-visible:outline-blue-950
+    disabled:border-gray-300
+    disabled:bg-gray-100
+    disabled:before:bg-gray-400
+    forced-colors:appearance-auto
+    forced-colors:before:hidden
+}
+
+input[type="checkbox"] {
+    @apply
+    appearance-none
+    size-4
+    rounded-sm border
+    border-gray-300
+    bg-white
+    checked:border-blue-950
+    checked:bg-blue-950
+    indeterminate:border-blue-950
+    indeterminate:bg-blue-950
+    focus-visible:outline-2
+    focus-visible:outline-offset-2
+    focus-visible:outline-blue-950
+    disabled:border-gray-300
+    disabled:bg-gray-100
+    disabled:checked:bg-gray-100
+    forced-colors:appearance-auto
+    mr-4
+}
+
+/*#termsAccepted {*/
+/*    @apply*/
+/*    mr-2*/
+/*}*/
