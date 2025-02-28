@@ -89,15 +89,15 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                             action={url.loginAction}
                             method="post"
                         >
-                            <div className="flex flex-col gap-6">
-                                {!usernameHidden && (
+                            {!usernameHidden && (
+                                <div className="flex flex-col gap-6">
                                     <div className="grid gap-2">
                                         <Label htmlFor="username">
                                             {!realm.loginWithEmailAllowed
                                                 ? msg("username")
                                                 : !realm.registrationEmailAsUsername
-                                                    ? msg("usernameOrEmail")
-                                                    : msg("email")}
+                                                  ? msg("usernameOrEmail")
+                                                  : msg("email")}
                                         </Label>
                                         <Input
                                             id="username"
@@ -113,8 +113,8 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                             <InputError message={kcSanitize(messagesPerField.getFirstError("username", "password"))} />
                                         )}
                                     </div>
-                                )}
-                            </div>
+                                </div>
+                            )}
 
                             <div className="flex flex-col gap-6">
                                 <div className="grid gap-2">
@@ -142,29 +142,15 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
 
                             {realm.rememberMe && !usernameHidden && (
                                 <div className="flex items-center space-x-3">
-                                    <Checkbox
-                                        id="rememberMe"
-                                        name="rememberMe"
-                                        tabIndex={5}
-                                        defaultChecked={!!login.rememberMe}
-                                    />
-                                    <Label htmlFor="rememberMe">
-                                        {msg("rememberMe")}
-                                    </Label>
+                                    <Checkbox id="rememberMe" name="rememberMe" tabIndex={5} defaultChecked={!!login.rememberMe} />
+                                    <Label htmlFor="rememberMe">{msg("rememberMe")}</Label>
                                 </div>
                             )}
 
                             <input type="hidden" name="credentialId" value={auth.selectedCredential} />
 
-                            <Button
-                                className="w-full"
-                                tabIndex={7}
-                                disabled={isLoginButtonDisabled}
-                                name="login"
-                                id="kc-login"
-                                type="submit"
-                            >
-                                { msgStr("doLogIn") }
+                            <Button className="w-full" tabIndex={7} disabled={isLoginButtonDisabled} name="login" id="kc-login" type="submit">
+                                {msgStr("doLogIn")}
                             </Button>
                         </form>
                     )}
