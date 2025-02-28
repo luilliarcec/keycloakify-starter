@@ -95,7 +95,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                             <div className="flex flex-col gap-6">
                                 {!usernameHidden && (
                                     <div className="grid gap-2">
-                                        <Label htmlFor="username" className={kcClsx("kcLabelClass")}>
+                                        <Label htmlFor="username">
                                             {!realm.loginWithEmailAllowed
                                                 ? msg("username")
                                                 : !realm.registrationEmailAsUsername
@@ -119,31 +119,25 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                 )}
                             </div>
 
-                            <div className={kcClsx("kcFormGroupClass")}>
-                                <label htmlFor="password" className={kcClsx("kcLabelClass")}>
-                                    {msg("password")}
-                                </label>
-                                <PasswordWrapper kcClsx={kcClsx} i18n={i18n} passwordInputId="password">
-                                    <input
-                                        tabIndex={3}
+                            <div className="flex flex-col gap-6">
+                                <div className="grid gap-2">
+                                    <Label htmlFor="password">
+                                        {msg("password")}
+                                    </Label>
+                                    <Input
                                         id="password"
-                                        className={kcClsx("kcInputClass")}
+                                        tabIndex={2}
                                         name="password"
+                                        defaultValue={login.username ?? ""}
                                         type="password"
+                                        autoFocus
                                         autoComplete="current-password"
                                         aria-invalid={messagesPerField.existsError("username", "password")}
                                     />
-                                </PasswordWrapper>
-                                {usernameHidden && messagesPerField.existsError("username", "password") && (
-                                    <span
-                                        id="input-error"
-                                        className={kcClsx("kcInputErrorMessageClass")}
-                                        aria-live="polite"
-                                        dangerouslySetInnerHTML={{
-                                            __html: kcSanitize(messagesPerField.getFirstError("username", "password"))
-                                        }}
-                                    />
-                                )}
+                                    {usernameHidden && messagesPerField.existsError("username", "password") && (
+                                        <InputError message={kcSanitize(messagesPerField.getFirstError("username", "password"))} />
+                                    )}
+                                </div>
                             </div>
 
                             <div className={kcClsx("kcFormGroupClass", "kcFormSettingClass")}>
