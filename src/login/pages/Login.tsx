@@ -38,15 +38,11 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
             headerNode={msg("loginAccountTitle")}
             displayInfo={realm.password && realm.registrationAllowed && !registrationDisabled}
             infoNode={
-                <div id="kc-registration-container">
-                    <div id="kc-registration">
-                        <span>
-                            {msg("noAccount")}{" "}
-                            <a tabIndex={8} href={url.registrationUrl}>
-                                {msg("doRegister")}
-                            </a>
-                        </span>
-                    </div>
+                <div className="text-muted-foreground text-center text-sm">
+                    {msg("noAccount")}{" "}
+                    <TextLink href={url.registrationUrl} tabIndex={8}>
+                        {msg("doRegister")}
+                    </TextLink>
                 </div>
             }
             socialProvidersNode={
@@ -134,9 +130,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                         id="password"
                                         tabIndex={2}
                                         name="password"
-                                        defaultValue={login.username ?? ""}
                                         type="password"
-                                        autoFocus
                                         autoComplete="current-password"
                                         aria-invalid={messagesPerField.existsError("username", "password")}
                                     />
@@ -163,7 +157,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                             <input type="hidden" name="credentialId" value={auth.selectedCredential} />
 
                             <Button
-                                className="mt-4 w-full"
+                                className="w-full"
                                 tabIndex={7}
                                 disabled={isLoginButtonDisabled}
                                 name="login"
