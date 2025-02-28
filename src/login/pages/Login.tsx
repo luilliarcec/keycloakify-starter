@@ -8,6 +8,8 @@ import { getKcClsx, type KcClsx } from "keycloakify/login/lib/kcClsx";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
 import { Button } from "@/components/ui/button";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
 
 export default function Login(props: PageProps<Extract<KcContext, { pageId: "login.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -151,17 +153,16 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                             <div className={kcClsx("kcFormGroupClass", "kcFormSettingClass")}>
                                 <div id="kc-form-options">
                                     {realm.rememberMe && !usernameHidden && (
-                                        <div className="checkbox">
-                                            <label>
-                                                <input
-                                                    tabIndex={5}
-                                                    id="rememberMe"
-                                                    name="rememberMe"
-                                                    type="checkbox"
-                                                    defaultChecked={!!login.rememberMe}
-                                                />{" "}
+                                        <div className="flex items-center space-x-3">
+                                            <Checkbox
+                                                id="rememberMe"
+                                                name="rememberMe"
+                                                tabIndex={5}
+                                                defaultChecked={!!login.rememberMe}
+                                            />
+                                            <Label htmlFor="rememberMe">
                                                 {msg("rememberMe")}
-                                            </label>
+                                            </Label>
                                         </div>
                                     )}
                                 </div>
