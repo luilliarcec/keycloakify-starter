@@ -12,6 +12,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import InputError from "@/components/input-error";
+import TextLink from "@/components/text-link";
 
 export default function Login(props: PageProps<Extract<KcContext, { pageId: "login.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -121,9 +122,14 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
 
                             <div className="flex flex-col gap-6">
                                 <div className="grid gap-2">
-                                    <Label htmlFor="password">
-                                        {msg("password")}
-                                    </Label>
+                                    <div className="flex items-center">
+                                        <Label htmlFor="password">{msg("password")}</Label>
+                                        {realm.resetPasswordAllowed && (
+                                            <TextLink tabIndex={6} href={url.loginResetCredentialsUrl} className="ml-auto text-sm">
+                                                {msg("doForgotPassword")}
+                                            </TextLink>
+                                        )}
+                                    </div>
                                     <Input
                                         id="password"
                                         tabIndex={2}
@@ -140,32 +146,19 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                 </div>
                             </div>
 
-                            <div className={kcClsx("kcFormGroupClass", "kcFormSettingClass")}>
-                                <div id="kc-form-options">
-                                    {realm.rememberMe && !usernameHidden && (
-                                        <div className="flex items-center space-x-3">
-                                            <Checkbox
-                                                id="rememberMe"
-                                                name="rememberMe"
-                                                tabIndex={5}
-                                                defaultChecked={!!login.rememberMe}
-                                            />
-                                            <Label htmlFor="rememberMe">
-                                                {msg("rememberMe")}
-                                            </Label>
-                                        </div>
-                                    )}
+                            {realm.rememberMe && !usernameHidden && (
+                                <div className="flex items-center space-x-3">
+                                    <Checkbox
+                                        id="rememberMe"
+                                        name="rememberMe"
+                                        tabIndex={5}
+                                        defaultChecked={!!login.rememberMe}
+                                    />
+                                    <Label htmlFor="rememberMe">
+                                        {msg("rememberMe")}
+                                    </Label>
                                 </div>
-                                <div className={kcClsx("kcFormOptionsWrapperClass")}>
-                                    {realm.resetPasswordAllowed && (
-                                        <span>
-                                            <a tabIndex={6} href={url.loginResetCredentialsUrl}>
-                                                {msg("doForgotPassword")}
-                                            </a>
-                                        </span>
-                                    )}
-                                </div>
-                            </div>
+                            )}
 
                             <div id="kc-form-buttons" className={kcClsx("kcFormGroupClass")}>
                                 <input type="hidden" id="id-hidden-input" name="credentialId" value={auth.selectedCredential} />
