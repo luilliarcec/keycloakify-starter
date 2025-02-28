@@ -9,7 +9,10 @@ import type { I18n } from "./i18n";
 import type { KcContext } from "./KcContext";
 import AppLogoIcon from '@/components/app-logo-icon';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
+import { Label } from "@/components/ui/label";
+import { ArrowRightEndOnRectangleIcon } from "@heroicons/react/24/solid";
 
 export default function Template(props: TemplateProps<KcContext, I18n>) {
     const {
@@ -90,14 +93,20 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                                 const node = !(auth !== undefined && auth.showUsername && !auth.showResetCredentials) ? (
                                     <CardTitle className="text-xl">{headerNode}</CardTitle>
                                 ) : (
-                                    <div id="kc-username" className={kcClsx("kcFormGroupClass")}>
-                                        <label id="kc-attempted-username">{auth.attemptedUsername}</label>
-                                        <a id="reset-login" href={url.loginRestartFlowUrl} aria-label={msgStr("restartLoginTooltip")}>
-                                            <div className="kc-login-tooltip">
-                                                <i className={kcClsx("kcResetFlowIcon")}></i>
-                                                <span className="kc-tooltip-text">{msg("restartLoginTooltip")}</span>
-                                            </div>
-                                        </a>
+                                    <div className="flex space-x-2 justify-center">
+                                        <Label className="text-lg">{auth.attemptedUsername}</Label>
+                                        <TooltipProvider>
+                                            <Tooltip>
+                                                <TooltipTrigger>
+                                                    <a href={url.loginRestartFlowUrl} aria-label={msgStr("restartLoginTooltip")}>
+                                                        <ArrowRightEndOnRectangleIcon className="size-5"></ArrowRightEndOnRectangleIcon>
+                                                    </a>
+                                                </TooltipTrigger>
+                                                <TooltipContent>
+                                                    <Label>{msg("restartLoginTooltip")}</Label>
+                                                </TooltipContent>
+                                            </Tooltip>
+                                        </TooltipProvider>
                                     </div>
                                 );
 
