@@ -8,6 +8,8 @@ import type { UserProfileFormFieldsProps } from "keycloakify/login/UserProfileFo
 import type { PageProps } from "keycloakify/login/pages/PageProps";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
+import { Button } from "@/components/ui/button.tsx";
+import TextLink from "@/components/text-link.tsx";
 
 type RegisterProps = PageProps<Extract<KcContext, { pageId: "register.ftl" }>, I18n> & {
     UserProfileFormFields: LazyOrNot<(props: UserProfileFormFieldsProps) => JSX.Element>;
@@ -53,6 +55,7 @@ export default function Register(props: RegisterProps) {
                     onIsFormSubmittableValueChange={setIsFormSubmittable}
                     doMakeUserConfirmPassword={doMakeUserConfirmPassword}
                 />
+
                 {termsAcceptanceRequired && (
                     <TermsAcceptance
                         i18n={i18n}
@@ -62,6 +65,7 @@ export default function Register(props: RegisterProps) {
                         onAreTermsAcceptedValueChange={setAreTermsAccepted}
                     />
                 )}
+
                 {recaptchaRequired && (recaptchaVisible || recaptchaAction === undefined) && (
                     <div className="form-group">
                         <div className={kcClsx("kcInputWrapperClass")}>
@@ -69,15 +73,8 @@ export default function Register(props: RegisterProps) {
                         </div>
                     </div>
                 )}
-                <div className={kcClsx("kcFormGroupClass")}>
-                    <div id="kc-form-options" className={kcClsx("kcFormOptionsClass")}>
-                        <div className={kcClsx("kcFormOptionsWrapperClass")}>
-                            <span>
-                                <a href={url.loginUrl}>{msg("backToLogin")}</a>
-                            </span>
-                        </div>
-                    </div>
 
+                <div className={kcClsx("kcFormGroupClass")}>
                     {recaptchaRequired && !recaptchaVisible && recaptchaAction !== undefined ? (
                         <div id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
                             <button
@@ -97,14 +94,22 @@ export default function Register(props: RegisterProps) {
                         </div>
                     ) : (
                         <div id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
-                            <input
+                            <Button
+                                className="w-full"
                                 disabled={!isFormSubmittable || (termsAcceptanceRequired && !areTermsAccepted)}
-                                className={kcClsx("kcButtonClass", "kcButtonPrimaryClass", "kcButtonBlockClass", "kcButtonLargeClass")}
                                 type="submit"
-                                value={msgStr("doRegister")}
-                            />
+                            >
+                                {msgStr("createAccount")}
+                            </Button>
                         </div>
                     )}
+                </div>
+
+                <div className="text-muted-foreground text-center text-sm">
+                    {msgStr("alreadyHaveAccount")}{' '}
+                    <TextLink href={url.loginUrl} tabIndex={6}>
+                        {msgStr("backToLogin")}
+                    </TextLink>
                 </div>
             </form>
         </Template>
