@@ -14,8 +14,8 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { Label } from "@/components/ui/label";
 import { ArrowRightEndOnRectangleIcon } from "@heroicons/react/24/solid";
 import TextInfo from "@/components/text-info.tsx";
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { fab } from '@fortawesome/free-brands-svg-icons';
+import { library } from "@fortawesome/fontawesome-svg-core";
+import { fab } from "@fortawesome/free-brands-svg-icons";
 
 library.add(fab);
 
@@ -76,7 +76,11 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                         <CardHeader className="px-10 pt-8 pb-0 text-center">
                             {enabledLanguages.length > 1 && (
                                 <div className="w-full flex justify-end mb-5">
-                                    <Select onValueChange={value => (window.location.href = value)} tabIndex={1}>
+                                    <Select
+                                        onValueChange={value => (window.location.href = value)}
+                                        tabIndex={1}
+                                        value={enabledLanguages.find(lang => lang?.languageTag === currentLanguage?.languageTag)?.href}
+                                    >
                                         <SelectTrigger className="w-[180px]">
                                             <SelectValue placeholder={currentLanguage.label} />
                                         </SelectTrigger>
@@ -85,11 +89,6 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                                                 <SelectItem key={languageTag} id={`language-${i + 1}`} value={href}>
                                                     {label}
                                                 </SelectItem>
-                                                // <li key={languageTag} className={kcClsx("kcLocaleListItemClass")} role="none">
-                                                //     <a role="menuitem" id={`language-${i + 1}`} className={kcClsx("kcLocaleItemClass")} href={href}>
-                                                //         {label}
-                                                //     </a>
-                                                // </li>
                                             ))}
                                         </SelectContent>
                                     </Select>
