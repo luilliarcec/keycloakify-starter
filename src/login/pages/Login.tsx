@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import InputError from "@/components/input-error";
 import TextLink from "@/components/text-link";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import SocialProvidersButtons from "@/components/social-providers-buttons.tsx";
 
 export default function Login(props: PageProps<Extract<KcContext, { pageId: "login.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -19,8 +19,6 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
     const { msg, msgStr } = i18n;
 
     const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(false);
-
-    const iconPrefix = "fa-brands";
 
     return (
         <Template
@@ -40,28 +38,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                 </div>
             }
             socialProvidersNode={
-                <>
-                    {realm.password && social?.providers !== undefined && social.providers.length !== 0 && (
-                        <div className="flex flex-col space-y-2">
-                            <div className="flex flex-row items-center space-x-4 my-4">
-                                <hr className="flex-grow border-gray-300" />
-                                <h2>{msg("identity-provider-login-label")}</h2>
-                                <hr className="flex-grow border-gray-300" />
-                            </div>
-
-                            <div className="flex flex-col space-y-2">
-                                {social.providers.map((...[p]) => (
-                                    <Button key={p.alias} asChild variant="outline" className="w-full">
-                                        <a id={`social-${p.alias}`} href={p.loginUrl}>
-                                            {p.iconClasses && <FontAwesomeIcon icon={[iconPrefix, p.iconClasses.split(" ")[1]]} />}
-                                            {kcSanitize(p.displayName)}
-                                        </a>
-                                    </Button>
-                                ))}
-                            </div>
-                        </div>
-                    )}
-                </>
+                <SocialProvidersButtons social={social} i18n={i18n} realm={realm}></SocialProvidersButtons>
             }
         >
             <div id="kc-form">
