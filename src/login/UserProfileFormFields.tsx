@@ -14,6 +14,7 @@ import type { Attribute } from "keycloakify/login/KcContext";
 import type { KcContext } from "./KcContext";
 import type { I18n } from "./i18n";
 import { Label } from "@/components/ui/label";
+import InputError from "@/components/input-error.tsx";
 
 export default function UserProfileFormFields(props: UserProfileFormFieldsProps<KcContext, I18n>) {
     const { kcContext, i18n, kcClsx, onIsFormSubmittableValueChange, doMakeUserConfirmPassword, BeforeField, AfterField } = props;
@@ -176,7 +177,7 @@ function GroupLabel(props: {
 }
 
 function FieldErrors(props: { attribute: Attribute; displayableErrors: FormFieldError[]; fieldIndex: number | undefined; kcClsx: KcClsx }) {
-    const { attribute, fieldIndex, kcClsx } = props;
+    const { attribute, fieldIndex } = props;
 
     const displayableErrors = props.displayableErrors.filter(error => error.fieldIndex === fieldIndex);
 
@@ -185,20 +186,16 @@ function FieldErrors(props: { attribute: Attribute; displayableErrors: FormField
     }
 
     return (
-        <span
+        <ul
             id={`input-error-${attribute.name}${fieldIndex === undefined ? "" : `-${fieldIndex}`}`}
-            className={kcClsx("kcInputErrorMessageClass")}
             aria-live="polite"
         >
             {displayableErrors
                 .filter(error => error.fieldIndex === fieldIndex)
-                .map(({ errorMessage }, i, arr) => (
-                    <Fragment key={i}>
-                        {errorMessage}
-                        {arr.length - 1 !== i && <br />}
-                    </Fragment>
+                .map(({ errorMessage }, i, ) => (
+                    <InputError key={i} children={errorMessage} asList />
                 ))}
-        </span>
+        </ul>
     );
 }
 
