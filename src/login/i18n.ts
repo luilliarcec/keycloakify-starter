@@ -10,6 +10,10 @@ const { useI18n, ofTypeI18n } = i18nBuilder
             noAccount: "Don't have an account?",
             doRegister: "Sign up",
         },
+        es: {
+            noAccount: "¿No tienes una cuenta?",
+            doRegister: "Registrate aquí",
+        },
     })
     .build();
 

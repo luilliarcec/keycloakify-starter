@@ -8,8 +8,8 @@ import { useInitialize } from "keycloakify/login/Template.useInitialize";
 import type { I18n } from "./i18n";
 import type { KcContext } from "./KcContext";
 import AppLogoIcon from "@/components/app-logo-icon";
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
-import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Label } from "@/components/ui/label";
 import { ArrowRightEndOnRectangleIcon } from "@heroicons/react/24/solid";
@@ -63,7 +63,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
     }
 
     return (
-        <div className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
+        <div id={realm.displayName} className="bg-muted flex min-h-svh flex-col items-center justify-center gap-6 p-6 md:p-10">
             <div className="flex w-full max-w-md flex-col gap-6">
                 <div className="flex items-center gap-2 self-center font-medium">
                     <div className="flex h-9 w-9 items-center justify-center">
@@ -77,17 +77,22 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                             {enabledLanguages.length > 1 && (
                                 <div className="w-full flex justify-end mb-5">
                                     <Select
-                                        onValueChange={value => (window.location.href = value)}
-                                        tabIndex={1}
-                                        value={enabledLanguages.find(lang => lang?.languageTag === currentLanguage?.languageTag)?.href}
+                                        onValueChange={value => {
+                                            const uri = enabledLanguages.find(lang => lang?.languageTag === value)?.href;
+
+                                            if (uri) {
+                                                window.location.href = uri
+                                            }
+                                        }}
+                                        value={currentLanguage?.languageTag}
                                     >
-                                        <SelectTrigger className="w-[180px]">
+                                        <SelectTrigger className="w-[180px]" tabIndex={1}>
                                             <SelectValue placeholder={currentLanguage.label} />
                                         </SelectTrigger>
                                         <SelectContent>
                                             {enabledLanguages.map(({ languageTag, label, href }, i) => (
-                                                <SelectItem key={languageTag} id={`language-${i + 1}`} value={href}>
-                                                    {label}
+                                                <SelectItem key={languageTag} id={`language-${i + 1}`} value={languageTag}>
+                                                    <a href={href}>{label}</a>
                                                 </SelectItem>
                                             ))}
                                         </SelectContent>

@@ -358,3 +358,13 @@ export const WithSocialProvidersAndWithoutRememberMe: Story = {
         />
     )
 };
+
+export const Spanish: Story = {
+    render: () => <KcPageStory
+        kcContext={{
+            locale: {
+                currentLanguageTag: "es"
+            }
+        }}
+    />
+};
