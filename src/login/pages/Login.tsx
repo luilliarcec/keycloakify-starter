@@ -74,7 +74,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                             aria-invalid={messagesPerField.existsError("username", "password")}
                                         />
                                         {messagesPerField.existsError("username", "password") && (
-                                            <InputError message={kcSanitize(messagesPerField.getFirstError("username", "password"))} />
+                                            <InputError children={kcSanitize(messagesPerField.getFirstError("username", "password"))} />
                                         )}
                                     </div>
                                 </div>
@@ -99,7 +99,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                         aria-invalid={messagesPerField.existsError("username", "password")}
                                     />
                                     {usernameHidden && messagesPerField.existsError("username", "password") && (
-                                        <InputError message={kcSanitize(messagesPerField.getFirstError("username", "password"))} />
+                                        <InputError children={kcSanitize(messagesPerField.getFirstError("username", "password"))} />
                                     )}
                                 </div>
                             </div>

@@ -57,7 +57,7 @@ export default function LoginPassword(props: PageProps<Extract<KcContext, { page
                                     aria-invalid={messagesPerField.existsError("username", "password")}
                                 />
                                 {messagesPerField.existsError("password") && (
-                                    <InputError message={kcSanitize(messagesPerField.getFirstError("password"))} />
+                                    <InputError children={kcSanitize(messagesPerField.getFirstError("password"))} />
                                 )}
                             </div>
                         </div>
