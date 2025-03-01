@@ -1,5 +1,4 @@
 import { useEffect } from "react";
-import { clsx } from "keycloakify/tools/clsx";
 import { kcSanitize } from "keycloakify/lib/kcSanitize";
 import type { TemplateProps } from "keycloakify/login/TemplateProps";
 import { getKcClsx } from "keycloakify/login/lib/kcClsx";
@@ -123,12 +122,11 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
 
                                 if (displayRequiredFields) {
                                     return (
-                                        <div className={kcClsx("kcContentWrapperClass")}>
-                                            <div className={clsx(kcClsx("kcLabelWrapperClass"), "subtitle")}>
-                                                <span className="subtitle">
-                                                    <span className="required">*</span>
-                                                    {msg("requiredFields")}
-                                                </span>
+                                        <div className="w-full">
+                                            <div className="w-full justify-end text-end">
+                                                <p className="text-xs text-gray-500 dark:text-gray-400">
+                                                    <span className="required">*</span> {msg("requiredFields")}
+                                                </p>
                                             </div>
                                             <div className="col-md-10">{node}</div>
                                         </div>
