@@ -12,6 +12,8 @@ const { useI18n, ofTypeI18n } = i18nBuilder
             createAccount: "Create account",
             backToLogin: "Log in",
             alreadyHaveAccount: "Already have an account?",
+            registerTitle: "Create an account",
+            loginAccountTitle: "Log in to your account",
         },
         es: {
             noAccount: "¿No tienes una cuenta?",
@@ -19,6 +21,8 @@ const { useI18n, ofTypeI18n } = i18nBuilder
             createAccount: "Crear cuenta",
             backToLogin: "Inicia sesión",
             alreadyHaveAccount: "¿Ya tienes una cuenta creada?",
+            registerTitle: "Crear una cuenta",
+            loginAccountTitle: "Ingresar a tu cuenta",
         },
     })
     .build();

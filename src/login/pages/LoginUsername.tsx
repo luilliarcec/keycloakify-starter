@@ -36,7 +36,7 @@ export default function LoginUsername(props: PageProps<Extract<KcContext, { page
                     </TextLink>
                 </div>
             }
-            headerNode={msg("doLogIn")}
+            headerNode={msg("loginAccountTitle")}
             socialProvidersNode={
                 <SocialProvidersButtons social={social} i18n={i18n} realm={realm}></SocialProvidersButtons>
             }

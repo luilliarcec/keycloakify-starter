@@ -136,7 +136,7 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                                 return node;
                             })()}
                         </CardHeader>
-                        <CardContent className="px-10 py-8">
+                        <CardContent className="px-10 pb-8 pt-4">
                             {displayMessage && message !== undefined && (message.type !== "warning" || !isAppInitiatedAction) && (
                                 <TextInfo variant={message.type}>
                                     <Label className="font-normal text-sm mb-4">{kcSanitize(message.summary)}</Label>
