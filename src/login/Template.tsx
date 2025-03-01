@@ -8,7 +8,7 @@ import { useInitialize } from "keycloakify/login/Template.useInitialize";
 import type { I18n } from "./i18n";
 import type { KcContext } from "./KcContext";
 import AppLogoIcon from "@/components/app-logo-icon";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Label } from "@/components/ui/label";
@@ -137,35 +137,29 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                                 </TextInfo>
                             )}
 
-                            <div id="kc-content-wrapper">
-                                {/* App-initiated actions should not see warning messages about the need to complete the action during login. */}
-                                {children}
-                                {auth !== undefined && auth.showTryAnotherWayLink && (
-                                    <form id="kc-select-try-another-way-form" action={url.loginAction} method="post">
-                                        <div className={kcClsx("kcFormGroupClass")}>
-                                            <input type="hidden" name="tryAnotherWay" value="on" />
-                                            <a
-                                                href="#"
-                                                id="try-another-way"
-                                                onClick={() => {
-                                                    document.forms["kc-select-try-another-way-form" as never].submit();
-                                                    return false;
-                                                }}
-                                            >
-                                                {msg("doTryAnotherWay")}
-                                            </a>
-                                        </div>
-                                    </form>
-                                )}
-                                {socialProvidersNode}
-                                {displayInfo && (
-                                    <div id="kc-info" className={kcClsx("kcSignUpClass")}>
-                                        <div id="kc-info-wrapper" className="mt-4">
-                                            {infoNode}
-                                        </div>
+                            {children}
+
+                            {auth !== undefined && auth.showTryAnotherWayLink && (
+                                <form id="kc-select-try-another-way-form" action={url.loginAction} method="post">
+                                    <div className={kcClsx("kcFormGroupClass")}>
+                                        <input type="hidden" name="tryAnotherWay" value="on" />
+                                        <a
+                                            href="#"
+                                            id="try-another-way"
+                                            onClick={() => {
+                                                document.forms["kc-select-try-another-way-form" as never].submit();
+                                                return false;
+                                            }}
+                                        >
+                                            {msg("doTryAnotherWay")}
+                                        </a>
                                     </div>
-                                )}
-                            </div>
+                                </form>
+                            )}
+
+                            {socialProvidersNode}
+
+                            {displayInfo && <div className="mt-4">{infoNode}</div>}
                         </CardContent>
                     </Card>
                 </div>
