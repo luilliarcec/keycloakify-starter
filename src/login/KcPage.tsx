@@ -7,7 +7,7 @@ import Template from "./Template";
 import "./main.css";
 
 const UserProfileFormFields = lazy(
-    () => import("keycloakify/login/UserProfileFormFields")
+    () => import("./UserProfileFormFields")
 );
 
 const Login = lazy(() => import("./pages/Login"));
@@ -52,7 +52,7 @@ export default function KcPage(props: { kcContext: KcContext }) {
                         <Register
                             {...{ kcContext, i18n, classes }}
                             Template={Template}
-                            doUseDefaultCss={true}
+                            doUseDefaultCss={false}
                             UserProfileFormFields={UserProfileFormFields}
                             doMakeUserConfirmPassword={doMakeUserConfirmPassword}
                         />
