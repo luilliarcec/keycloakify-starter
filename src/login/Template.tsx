@@ -7,12 +7,13 @@ import { useSetClassName } from "keycloakify/tools/useSetClassName";
 import { useInitialize } from "keycloakify/login/Template.useInitialize";
 import type { I18n } from "./i18n";
 import type { KcContext } from "./KcContext";
-import AppLogoIcon from '@/components/app-logo-icon';
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
+import AppLogoIcon from "@/components/app-logo-icon";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectLabel, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip";
 import { Label } from "@/components/ui/label";
 import { ArrowRightEndOnRectangleIcon } from "@heroicons/react/24/solid";
+import TextInfo from "@/components/text-info.tsx";
 
 export default function Template(props: TemplateProps<KcContext, I18n>) {
     const {
@@ -71,13 +72,15 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                         <CardHeader className="px-10 pt-8 pb-0 text-center">
                             {enabledLanguages.length > 1 && (
                                 <div className="w-full flex justify-end mb-5">
-                                    <Select onValueChange={(value) => window.location.href = value} tabIndex={1}>
+                                    <Select onValueChange={value => (window.location.href = value)} tabIndex={1}>
                                         <SelectTrigger className="w-[180px]">
                                             <SelectValue placeholder={currentLanguage.label} />
                                         </SelectTrigger>
                                         <SelectContent>
                                             {enabledLanguages.map(({ languageTag, label, href }, i) => (
-                                                <SelectItem key={languageTag} id={`language-${i + 1}`} value={href}>{label}</SelectItem>
+                                                <SelectItem key={languageTag} id={`language-${i + 1}`} value={href}>
+                                                    {label}
+                                                </SelectItem>
                                                 // <li key={languageTag} className={kcClsx("kcLocaleListItemClass")} role="none">
                                                 //     <a role="menuitem" id={`language-${i + 1}`} className={kcClsx("kcLocaleItemClass")} href={href}>
                                                 //         {label}
@@ -114,10 +117,10 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                                     return (
                                         <div className={kcClsx("kcContentWrapperClass")}>
                                             <div className={clsx(kcClsx("kcLabelWrapperClass"), "subtitle")}>
-                                        <span className="subtitle">
-                                            <span className="required">*</span>
-                                            {msg("requiredFields")}
-                                        </span>
+                                                <span className="subtitle">
+                                                    <span className="required">*</span>
+                                                    {msg("requiredFields")}
+                                                </span>
                                             </div>
                                             <div className="col-md-10">{node}</div>
                                         </div>
@@ -128,30 +131,14 @@ export default function Template(props: TemplateProps<KcContext, I18n>) {
                             })()}
                         </CardHeader>
                         <CardContent className="px-10 py-8">
+                            {displayMessage && message !== undefined && (message.type !== "warning" || !isAppInitiatedAction) && (
+                                <TextInfo variant={message.type}>
+                                    <Label className="font-normal text-sm mb-4">{kcSanitize(message.summary)}</Label>
+                                </TextInfo>
+                            )}
+
                             <div id="kc-content-wrapper">
                                 {/* App-initiated actions should not see warning messages about the need to complete the action during login. */}
-                                {displayMessage && message !== undefined && (message.type !== "warning" || !isAppInitiatedAction) && (
-                                    <div
-                                        className={clsx(
-                                            `alert-${message.type}`,
-                                            kcClsx("kcAlertClass"),
-                                            `pf-m-${message?.type === "error" ? "danger" : message.type}`
-                                        )}
-                                    >
-                                        <div className="pf-c-alert__icon">
-                                            {message.type === "success" && <span className={kcClsx("kcFeedbackSuccessIcon")}></span>}
-                                            {message.type === "warning" && <span className={kcClsx("kcFeedbackWarningIcon")}></span>}
-                                            {message.type === "error" && <span className={kcClsx("kcFeedbackErrorIcon")}></span>}
-                                            {message.type === "info" && <span className={kcClsx("kcFeedbackInfoIcon")}></span>}
-                                        </div>
-                                        <span
-                                            className={kcClsx("kcAlertTitleClass")}
-                                            dangerouslySetInnerHTML={{
-                                                __html: kcSanitize(message.summary)
-                                            }}
-                                        />
-                                    </div>
-                                )}
                                 {children}
                                 {auth !== undefined && auth.showTryAnotherWayLink && (
                                     <form id="kc-select-try-another-way-form" action={url.loginAction} method="post">
