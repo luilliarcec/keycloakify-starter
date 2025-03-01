@@ -1,8 +1,6 @@
 import { useState } from "react";
 import { kcSanitize } from "keycloakify/lib/kcSanitize";
-import { clsx } from "keycloakify/tools/clsx";
 import type { PageProps } from "keycloakify/login/pages/PageProps";
-import { getKcClsx } from "keycloakify/login/lib/kcClsx";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
 import { Button } from "@/components/ui/button";
@@ -11,20 +9,18 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import InputError from "@/components/input-error";
 import TextLink from "@/components/text-link";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 export default function Login(props: PageProps<Extract<KcContext, { pageId: "login.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
-
-    const { kcClsx } = getKcClsx({
-        doUseDefaultCss,
-        classes
-    });
 
     const { social, realm, url, usernameHidden, login, auth, registrationDisabled, messagesPerField } = kcContext;
 
     const { msg, msgStr } = i18n;
 
     const [isLoginButtonDisabled, setIsLoginButtonDisabled] = useState(false);
+
+    const iconPrefix = "fa-brands";
 
     return (
         <Template
@@ -57,7 +53,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                 {social.providers.map((...[p]) => (
                                     <Button key={p.alias} asChild variant="outline" className="w-full">
                                         <a id={`social-${p.alias}`} href={p.loginUrl}>
-                                            {p.iconClasses && <i className={clsx(kcClsx("kcCommonLogoIdP"), p.iconClasses)} aria-hidden="true"></i>}
+                                            {p.iconClasses && <FontAwesomeIcon icon={[iconPrefix, p.iconClasses.split(" ")[1]]} />}
                                             {kcSanitize(p.displayName)}
                                         </a>
                                     </Button>

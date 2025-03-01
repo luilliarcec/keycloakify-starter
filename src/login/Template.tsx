@@ -14,6 +14,10 @@ import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/comp
 import { Label } from "@/components/ui/label";
 import { ArrowRightEndOnRectangleIcon } from "@heroicons/react/24/solid";
 import TextInfo from "@/components/text-info.tsx";
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { fab } from '@fortawesome/free-brands-svg-icons';
+
+library.add(fab);
 
 export default function Template(props: TemplateProps<KcContext, I18n>) {
     const {
