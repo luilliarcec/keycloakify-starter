@@ -3,13 +3,15 @@ import { useState } from "react";
 import type { LazyOrNot } from "keycloakify/tools/LazyOrNot";
 import { kcSanitize } from "keycloakify/lib/kcSanitize";
 import { getKcClsx, type KcClsx } from "keycloakify/login/lib/kcClsx";
-import { clsx } from "keycloakify/tools/clsx";
 import type { UserProfileFormFieldsProps } from "keycloakify/login/UserProfileFormFieldsProps";
 import type { PageProps } from "keycloakify/login/pages/PageProps";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
-import { Button } from "@/components/ui/button.tsx";
-import TextLink from "@/components/text-link.tsx";
+import { Button } from "@/components/ui/button";
+import TextLink from "@/components/text-link";
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import InputError from "@/components/input-error.tsx";
 
 type RegisterProps = PageProps<Extract<KcContext, { pageId: "register.ftl" }>, I18n> & {
     UserProfileFormFields: LazyOrNot<(props: UserProfileFormFieldsProps) => JSX.Element>;
@@ -42,12 +44,7 @@ export default function Register(props: RegisterProps) {
             displayMessage={messagesPerField.exists("global")}
             displayRequiredFields
         >
-            <form
-                id="kc-register-form"
-                className="flex flex-col gap-6"
-                action={url.registrationAction}
-                method="post"
-            >
+            <form id="kc-register-form" className="flex flex-col gap-6" action={url.registrationAction} method="post">
                 <UserProfileFormFields
                     kcContext={kcContext}
                     i18n={i18n}
@@ -68,7 +65,7 @@ export default function Register(props: RegisterProps) {
 
                 {recaptchaRequired && (recaptchaVisible || recaptchaAction === undefined) && (
                     <div className="form-group">
-                        <div className={kcClsx("kcInputWrapperClass")}>
+                        <div className="w-full">
                             <div className="g-recaptcha" data-size="compact" data-sitekey={recaptchaSiteKey} data-action={recaptchaAction}></div>
                         </div>
                     </div>
@@ -76,12 +73,9 @@ export default function Register(props: RegisterProps) {
 
                 <div className={kcClsx("kcFormGroupClass")}>
                     {recaptchaRequired && !recaptchaVisible && recaptchaAction !== undefined ? (
-                        <div id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
-                            <button
-                                className={clsx(
-                                    kcClsx("kcButtonClass", "kcButtonPrimaryClass", "kcButtonBlockClass", "kcButtonLargeClass"),
-                                    "g-recaptcha"
-                                )}
+                        <div id="kc-form-buttons">
+                            <Button
+                                className="w-full g-recaptcha"
                                 data-sitekey={recaptchaSiteKey}
                                 data-callback={() => {
                                     (document.getElementById("kc-register-form") as HTMLFormElement).submit();
@@ -89,16 +83,12 @@ export default function Register(props: RegisterProps) {
                                 data-action={recaptchaAction}
                                 type="submit"
                             >
-                                {msg("doRegister")}
-                            </button>
+                                {msgStr("createAccount")}
+                            </Button>
                         </div>
                     ) : (
-                        <div id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
-                            <Button
-                                className="w-full"
-                                disabled={!isFormSubmittable || (termsAcceptanceRequired && !areTermsAccepted)}
-                                type="submit"
-                            >
+                        <div id="kc-form-buttons">
+                            <Button className="w-full" disabled={!isFormSubmittable || (termsAcceptanceRequired && !areTermsAccepted)} type="submit">
                                 {msgStr("createAccount")}
                             </Button>
                         </div>
@@ -106,7 +96,7 @@ export default function Register(props: RegisterProps) {
                 </div>
 
                 <div className="text-muted-foreground text-center text-sm">
-                    {msgStr("alreadyHaveAccount")}{' '}
+                    {msgStr("alreadyHaveAccount")}{" "}
                     <TextLink href={url.loginUrl} tabIndex={6}>
                         {msgStr("backToLogin")}
                     </TextLink>
@@ -123,44 +113,39 @@ function TermsAcceptance(props: {
     areTermsAccepted: boolean;
     onAreTermsAcceptedValueChange: (areTermsAccepted: boolean) => void;
 }) {
-    const { i18n, kcClsx, messagesPerField, areTermsAccepted, onAreTermsAcceptedValueChange } = props;
+    const { i18n, messagesPerField, areTermsAccepted, onAreTermsAcceptedValueChange } = props;
 
     const { msg } = i18n;
 
     return (
         <>
             <div className="form-group">
-                <div className={kcClsx("kcInputWrapperClass")}>
-                    {msg("termsTitle")}
-                    <div id="kc-registration-terms-text">{msg("termsText")}</div>
+                <div className="flex flex-col space-y-1 text-sm">
+                    <div className="text-gray-500 dark:text-gray-400">
+                        {msg("termsTitle")}
+                    </div>
+                    <div
+                        id="kc-registration-terms-text"
+                        className="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
+                    >
+                        {msg("termsText")}
+                    </div>
                 </div>
             </div>
-            <div className="form-group">
-                <div className={kcClsx("kcLabelWrapperClass")}>
-                    <input
-                        type="checkbox"
+
+            <div className="grid gap-1">
+                <div className="flex items-center space-x-3">
+                    <Checkbox
                         id="termsAccepted"
                         name="termsAccepted"
-                        className={kcClsx("kcCheckboxInputClass")}
                         checked={areTermsAccepted}
-                        onChange={e => onAreTermsAcceptedValueChange(e.target.checked)}
+                        onCheckedChange={checked => onAreTermsAcceptedValueChange(!!checked)}
                         aria-invalid={messagesPerField.existsError("termsAccepted")}
                     />
-                    <label htmlFor="termsAccepted" className={kcClsx("kcLabelClass")}>
-                        {msg("acceptTerms")}
-                    </label>
+                    <Label htmlFor="termsAccepted">{msg("acceptTerms")}</Label>
                 </div>
                 {messagesPerField.existsError("termsAccepted") && (
-                    <div className={kcClsx("kcLabelWrapperClass")}>
-                        <span
-                            id="input-error-terms-accepted"
-                            className={kcClsx("kcInputErrorMessageClass")}
-                            aria-live="polite"
-                            dangerouslySetInnerHTML={{
-                                __html: kcSanitize(messagesPerField.get("termsAccepted"))
-                            }}
-                        />
-                    </div>
+                    <InputError children={kcSanitize(messagesPerField.get("termsAccepted"))} />
                 )}
             </div>
         </>
