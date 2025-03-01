@@ -13,6 +13,7 @@ import type { UserProfileFormFieldsProps } from "keycloakify/login/UserProfileFo
 import type { Attribute } from "keycloakify/login/KcContext";
 import type { KcContext } from "./KcContext";
 import type { I18n } from "./i18n";
+import { Label } from "@/components/ui/label";
 
 export default function UserProfileFormFields(props: UserProfileFormFieldsProps<KcContext, I18n>) {
     const { kcContext, i18n, kcClsx, onIsFormSubmittableValueChange, doMakeUserConfirmPassword, BeforeField, AfterField } = props;
@@ -57,21 +58,22 @@ export default function UserProfileFormFields(props: UserProfileFormFieldsProps<
                             }}
                         >
                             <div className={kcClsx("kcLabelWrapperClass")}>
-                                <label htmlFor={attribute.name} className={kcClsx("kcLabelClass")}>
-                                    {advancedMsg(attribute.displayName ?? "")}
-                                </label>
-                                {attribute.required && <> *</>}
+                                <Label htmlFor={attribute.name}>
+                                    {advancedMsg(attribute.displayName ?? "")} {attribute.required && <> *</>}
+                                </Label>
                             </div>
+
                             <div className={kcClsx("kcInputWrapperClass")}>
                                 {attribute.annotations.inputHelperTextBefore !== undefined && (
                                     <div
-                                        className={kcClsx("kcInputHelperTextBeforeClass")}
+                                        className="text-sm text-gray-500 dark:text-gray-400"
                                         id={`form-help-text-before-${attribute.name}`}
                                         aria-live="polite"
                                     >
                                         {advancedMsg(attribute.annotations.inputHelperTextBefore)}
                                     </div>
                                 )}
+
                                 <InputFieldByType
                                     attribute={attribute}
                                     valueOrValues={valueOrValues}
@@ -80,10 +82,12 @@ export default function UserProfileFormFields(props: UserProfileFormFieldsProps<
                                     kcClsx={kcClsx}
                                     i18n={i18n}
                                 />
+
                                 <FieldErrors attribute={attribute} displayableErrors={displayableErrors} kcClsx={kcClsx} fieldIndex={undefined} />
+
                                 {attribute.annotations.inputHelperTextAfter !== undefined && (
                                     <div
-                                        className={kcClsx("kcInputHelperTextAfterClass")}
+                                        className="text-sm text-gray-500 dark:text-gray-400"
                                         id={`form-help-text-after-${attribute.name}`}
                                         aria-live="polite"
                                     >
