@@ -13,6 +13,7 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import InputError from "@/components/input-error";
 import TextLink from "@/components/text-link";
+import { Separator } from "@/components/ui/separator";
 
 export default function Login(props: PageProps<Extract<KcContext, { pageId: "login.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -48,30 +49,23 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
             socialProvidersNode={
                 <>
                     {realm.password && social?.providers !== undefined && social.providers.length !== 0 && (
-                        <div id="kc-social-providers" className={kcClsx("kcFormSocialAccountSectionClass")}>
-                            <hr />
-                            <h2>{msg("identity-provider-login-label")}</h2>
-                            <ul className={kcClsx("kcFormSocialAccountListClass", social.providers.length > 3 && "kcFormSocialAccountListGridClass")}>
-                                {social.providers.map((...[p, , providers]) => (
-                                    <li key={p.alias}>
-                                        <a
-                                            id={`social-${p.alias}`}
-                                            className={kcClsx(
-                                                "kcFormSocialAccountListButtonClass",
-                                                providers.length > 3 && "kcFormSocialAccountGridItem"
-                                            )}
-                                            type="button"
-                                            href={p.loginUrl}
-                                        >
+                        <div className="flex flex-col space-y-2">
+                            <div className="flex flex-row items-center space-x-4 my-4">
+                                <hr className="flex-grow border-gray-300" />
+                                <h2>{msg("identity-provider-login-label")}</h2>
+                                <hr className="flex-grow border-gray-300" />
+                            </div>
+
+                            <div className="flex flex-col space-y-2">
+                                {social.providers.map((...[p]) => (
+                                    <Button key={p.alias} asChild variant="outline" className="w-full">
+                                        <a id={`social-${p.alias}`} href={p.loginUrl}>
                                             {p.iconClasses && <i className={clsx(kcClsx("kcCommonLogoIdP"), p.iconClasses)} aria-hidden="true"></i>}
-                                            <span
-                                                className={clsx(kcClsx("kcFormSocialAccountNameClass"), p.iconClasses && "kc-social-icon-text")}
-                                                dangerouslySetInnerHTML={{ __html: kcSanitize(p.displayName) }}
-                                            ></span>
+                                            {kcSanitize(p.displayName)}
                                         </a>
-                                    </li>
+                                    </Button>
                                 ))}
-                            </ul>
+                            </div>
                         </div>
                     )}
                 </>
