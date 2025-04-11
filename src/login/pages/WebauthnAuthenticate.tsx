@@ -5,6 +5,8 @@ import { useScript } from "keycloakify/login/pages/WebauthnAuthenticate.useScrip
 import type { PageProps } from "keycloakify/login/pages/PageProps";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
+import { Button } from "@/components/ui/button.tsx";
+import TextLink from "@/components/text-link.tsx";
 
 export default function WebauthnAuthenticate(props: PageProps<Extract<KcContext, { pageId: "webauthn-authenticate.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -31,13 +33,11 @@ export default function WebauthnAuthenticate(props: PageProps<Extract<KcContext,
             classes={classes}
             displayInfo={realm.registrationAllowed && !registrationDisabled}
             infoNode={
-                <div id="kc-registration">
-                    <span>
-                        {msg("noAccount")}{" "}
-                        <a tabIndex={6} href={url.registrationUrl}>
-                            {msg("doRegister")}
-                        </a>
-                    </span>
+                <div className="text-muted-foreground text-center text-sm">
+                    {msg("noAccount")}{" "}
+                    <TextLink href={url.registrationUrl} tabIndex={8}>
+                        {msg("doRegister")}
+                    </TextLink>
                 </div>
             }
             headerNode={msg("webauthn-login-title")}
@@ -123,13 +123,9 @@ export default function WebauthnAuthenticate(props: PageProps<Extract<KcContext,
                         </>
                     )}
                     <div id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
-                        <input
-                            id={authButtonId}
-                            type="button"
-                            autoFocus
-                            value={msgStr("webauthn-doAuthenticate")}
-                            className={kcClsx("kcButtonClass", "kcButtonPrimaryClass", "kcButtonBlockClass", "kcButtonLargeClass")}
-                        />
+                        <Button id={authButtonId} className="w-full" tabIndex={7} type="submit">
+                            {msgStr("webauthn-doAuthenticate")}
+                        </Button>
                     </div>
                 </div>
             </div>
