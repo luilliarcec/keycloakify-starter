@@ -2,7 +2,7 @@ services:
     app:
         build: .
         ports:
-            - "6007:6006"
+            - "6006:6006"
         volumes:
             - .:/usr/src/app
         working_dir: /usr/src/app
