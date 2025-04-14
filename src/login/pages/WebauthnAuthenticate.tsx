@@ -7,6 +7,8 @@ import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
 import { Button } from "@/components/ui/button.tsx";
 import TextLink from "@/components/text-link.tsx";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faKey } from "@fortawesome/free-solid-svg-icons"
 
 export default function WebauthnAuthenticate(props: PageProps<Extract<KcContext, { pageId: "webauthn-authenticate.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -56,6 +58,7 @@ export default function WebauthnAuthenticate(props: PageProps<Extract<KcContext,
                         <>
                             <form id="authn_select" className={kcClsx("kcFormClass")}>
                                 {authenticators.authenticators.map(authenticator => (
+                                    // eslint-disable-next-line react/jsx-key
                                     <input type="hidden" name="authn_use_chk" value={authenticator.credentialId} />
                                 ))}
                             </form>
@@ -63,36 +66,27 @@ export default function WebauthnAuthenticate(props: PageProps<Extract<KcContext,
                             {shouldDisplayAuthenticators && (
                                 <>
                                     {authenticators.authenticators.length > 1 && (
-                                        <p className={kcClsx("kcSelectAuthListItemTitle")}>{msg("webauthn-available-authenticators")}</p>
+                                        <p className="mb-4 font-semibold">
+                                            {msg("webauthn-available-authenticators")}
+                                        </p>
                                     )}
-                                    <div className={kcClsx("kcFormOptionsClass")}>
+                                    <div className="mb-2 divide-y divide-gray-200 space-y-1">
                                         {authenticators.authenticators.map((authenticator, i) => (
-                                            <div key={i} id={`kc-webauthn-authenticator-item-${i}`} className={kcClsx("kcSelectAuthListItemClass")}>
-                                                <div className={kcClsx("kcSelectAuthListItemIconClass")}>
-                                                    <i
-                                                        className={clsx(
-                                                            (() => {
-                                                                const className = kcClsx(authenticator.transports.iconClass as any);
-                                                                if (className === authenticator.transports.iconClass) {
-                                                                    return kcClsx("kcWebAuthnDefaultIcon");
-                                                                }
-                                                                return className;
-                                                            })(),
-                                                            kcClsx("kcSelectAuthListItemIconPropertyClass")
-                                                        )}
-                                                    />
+                                            <div key={i} id={`kc-webauthn-authenticator-item-${i}`} className="relative flex items-center space-x-4 pb-2">
+                                                <div className="shirnk-0">
+                                                    <FontAwesomeIcon icon={faKey} className="text-gray-500" />
                                                 </div>
-                                                <div className={kcClsx("kcSelectAuthListItemArrowIconClass")}>
+                                                <div className="w-full">
                                                     <div
                                                         id={`kc-webauthn-authenticator-label-${i}`}
-                                                        className={kcClsx("kcSelectAuthListItemHeadingClass")}
+                                                        className="font-semibold"
                                                     >
                                                         {advancedMsg(authenticator.label)}
                                                     </div>
                                                     {authenticator.transports.displayNameProperties?.length && (
                                                         <div
                                                             id={`kc-webauthn-authenticator-transport-${i}`}
-                                                            className={kcClsx("kcSelectAuthListItemDescriptionClass")}
+                                                            className="text-sm text-gray-500"
                                                         >
                                                             {authenticator.transports.displayNameProperties
                                                                 .map((displayNameProperty, i, arr) => ({
@@ -107,13 +101,14 @@ export default function WebauthnAuthenticate(props: PageProps<Extract<KcContext,
                                                                 ))}
                                                         </div>
                                                     )}
-                                                    <div className={kcClsx("kcSelectAuthListItemDescriptionClass")}>
+                                                    <div className="text-sm text-gray-500 flex space-x-1">
                                                         <span id={`kc-webauthn-authenticator-createdlabel-${i}`}>
                                                             {msg("webauthn-createdAt-label")}
                                                         </span>
-                                                        <span id={`kc-webauthn-authenticator-created-${i}`}>{authenticator.createdAt}</span>
+                                                        <span id={`kc-webauthn-authenticator-created-${i}`}>
+                                                            {authenticator.createdAt}
+                                                        </span>
                                                     </div>
-                                                    <div className={kcClsx("kcSelectAuthListItemFillClass")} />
                                                 </div>
                                             </div>
                                         ))}
