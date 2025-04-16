@@ -190,7 +190,9 @@ function FieldErrors(props: { attribute: Attribute; displayableErrors: FormField
             {displayableErrors
                 .filter(error => error.fieldIndex === fieldIndex)
                 .map(({ errorMessage }, i) => (
-                    <InputError key={i} children={errorMessage} asList />
+                    <InputError key={i} asList>
+                        {errorMessage}
+                    </InputError>
                 ))}
         </ul>
     );

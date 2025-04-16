@@ -145,7 +145,9 @@ function TermsAcceptance(props: {
                     <Label htmlFor="termsAccepted">{msg("acceptTerms")}</Label>
                 </div>
                 {messagesPerField.existsError("termsAccepted") && (
-                    <InputError children={kcSanitize(messagesPerField.get("termsAccepted"))} />
+                    <InputError>
+                        {kcSanitize(messagesPerField.get("termsAccepted"))}
+                    </InputError>
                 )}
             </div>
         </>

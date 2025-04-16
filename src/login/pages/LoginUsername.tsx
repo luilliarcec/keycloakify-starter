@@ -74,7 +74,9 @@ export default function LoginUsername(props: PageProps<Extract<KcContext, { page
                                             aria-invalid={messagesPerField.existsError("username")}
                                         />
                                         {messagesPerField.existsError("username", "password") && (
-                                            <InputError children={kcSanitize(messagesPerField.getFirstError("username", "password"))} />
+                                            <InputError>
+                                                {kcSanitize(messagesPerField.getFirstError("username", "password"))}
+                                            </InputError>
                                         )}
                                     </div>
                                 </div>

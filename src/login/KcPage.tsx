@@ -14,6 +14,8 @@ const LoginPassword = lazy(() => import("./pages/LoginPassword"));
 const Register = lazy(() => import("./pages/Register"));
 const WebauthnAuthenticate = lazy(() => import("./pages/WebauthnAuthenticate"));
 const WebauthnRegister = lazy(() => import("./pages/WebauthnRegister"));
+const Info = lazy(() => import("./pages/Info"));
+const Error = lazy(() => import("./pages/Error"));
 
 const doMakeUserConfirmPassword = true;
 
@@ -71,6 +73,22 @@ export default function KcPage(props: { kcContext: KcContext }) {
                     case "webauthn-register.ftl":
                         return (
                             <WebauthnRegister
+                                {...{ kcContext, i18n, classes }}
+                                Template={Template}
+                                doUseDefaultCss={false}
+                            />
+                        );
+                    case "info.ftl":
+                        return (
+                            <Info
+                                {...{ kcContext, i18n, classes }}
+                                Template={Template}
+                                doUseDefaultCss={false}
+                            />
+                        );
+                    case "error.ftl":
+                        return (
+                            <Error
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
                                 doUseDefaultCss={false}
