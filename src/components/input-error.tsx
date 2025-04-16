@@ -16,15 +16,13 @@ export default function InputError({ children, asList = false, className = '', .
 
     if (asList) {
         return (
-            <li {...props} className={cn(baseClassName, className)}>
-                {children}
+            <li {...props} className={cn(baseClassName, className)} dangerouslySetInnerHTML={{ __html: children }}>
             </li>
         );
     }
 
     return (
-        <p {...props} className={cn(baseClassName, className)}>
-            {children}
+        <p {...props} className={cn(baseClassName, className)} dangerouslySetInnerHTML={{ __html: children }}>
         </p>
     );
 }
