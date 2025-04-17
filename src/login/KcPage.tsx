@@ -20,6 +20,7 @@ const LoginResetPassword = lazy(() => import("./pages/LoginResetPassword"));
 const LoginVerifyEmail = lazy(() => import("./pages/LoginVerifyEmail"));
 const Terms = lazy(() => import("./pages/Terms.tsx"));
 const LoginOauthGrant = lazy(() => import("./pages/LoginOauthGrant.tsx"));
+const LoginOauth2DeviceVerifyUserCode = lazy(() => import("./pages/LoginOauth2DeviceVerifyUserCode.tsx"));
 
 const doMakeUserConfirmPassword = true;
 
@@ -125,6 +126,14 @@ export default function KcPage(props: { kcContext: KcContext }) {
                     case "login-oauth-grant.ftl":
                         return (
                             <LoginOauthGrant
+                                {...{ kcContext, i18n, classes }}
+                                Template={Template}
+                                doUseDefaultCss={false}
+                            />
+                        );
+                    case "login-oauth2-device-verify-user-code.ftl":
+                        return (
+                            <LoginOauth2DeviceVerifyUserCode
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
                                 doUseDefaultCss={false}
