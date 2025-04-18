@@ -1,5 +1,5 @@
 import { kcSanitize } from "keycloakify/lib/kcSanitize";
-import { getKcClsx, type KcClsx } from "keycloakify/login/lib/kcClsx";
+import { getKcClsx } from "keycloakify/login/lib/kcClsx";
 import type { PageProps } from "keycloakify/login/pages/PageProps";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
@@ -7,6 +7,7 @@ import { Label } from "@/components/ui/label.tsx";
 import { PasswordInput } from "@/components/password-input.tsx";
 import InputError from "@/components/input-error.tsx";
 import { Button } from "@/components/ui/button.tsx";
+import { Checkbox } from "@/components/ui/checkbox.tsx";
 
 export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, { pageId: "login-update-password.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -29,7 +30,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
             displayMessage={!messagesPerField.existsError("password", "password-confirm")}
             headerNode={msg("updatePasswordTitle")}
         >
-            <form id="kc-passwd-update-form" className={kcClsx("kcFormClass")} action={url.loginAction} method="post">
+            <form id="kc-passwd-update-form" className="flex flex-col gap-6" action={url.loginAction} method="post">
                 <div className="flex flex-col gap-6">
                     <div className="grid gap-2">
                         <div className="flex items-center">
@@ -70,10 +71,16 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                     </div>
                 </div>
 
-                <div className={kcClsx("kcFormGroupClass")}>
-                    <LogoutOtherSessions kcClsx={kcClsx} i18n={i18n} />
+                <div className="flex flex-col gap-6">
+                    <div id="kc-form-options" className={kcClsx("kcFormOptionsClass")}>
+                        <div className="flex items-center space-x-3">
+                            <Checkbox id="logout-sessions" name="logout-sessions" value="on" defaultChecked={true}/>
+                            <Label htmlFor="logout-sessions">{msg("logoutOtherSessions")}</Label>
+                        </div>
+                    </div>
+
                     <div id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
-                        <Button className="w-full" value={msgStr("doSubmit")} type="submit" >
+                        <Button className="w-full" value={msgStr("doSubmit")} type="submit">
                             {msgStr("doSubmit")}
                         </Button>
 
@@ -86,24 +93,5 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                 </div>
             </form>
         </Template>
-    );
-}
-
-function LogoutOtherSessions(props: { kcClsx: KcClsx; i18n: I18n }) {
-    const { kcClsx, i18n } = props;
-
-    const { msg } = i18n;
-
-    return (
-        <div id="kc-form-options" className={kcClsx("kcFormOptionsClass")}>
-            <div className={kcClsx("kcFormOptionsWrapperClass")}>
-                <div className="checkbox">
-                    <label>
-                        <input type="checkbox" id="logout-sessions" name="logout-sessions" value="on" defaultChecked={true} />
-                        {msg("logoutOtherSessions")}
-                    </label>
-                </div>
-            </div>
-        </div>
     );
 }
