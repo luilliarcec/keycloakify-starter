@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input";
 import InputError from "@/components/input-error";
 import TextLink from "@/components/text-link";
 import SocialProvidersButtons from "@/components/social-providers-buttons.tsx";
+import { PasswordInput } from "@/components/password-input.tsx";
 
 export default function Login(props: PageProps<Extract<KcContext, { pageId: "login.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -92,11 +93,10 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                             </TextLink>
                                         )}
                                     </div>
-                                    <Input
+                                    <PasswordInput
                                         id="password"
                                         tabIndex={2}
                                         name="password"
-                                        type="password"
                                         autoComplete="current-password"
                                         aria-invalid={messagesPerField.existsError("username", "password")}
                                     />
