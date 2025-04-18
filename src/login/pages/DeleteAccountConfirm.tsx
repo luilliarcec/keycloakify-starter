@@ -3,6 +3,8 @@ import type { PageProps } from "keycloakify/login/pages/PageProps";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
 import { Button } from "@/components/ui/button.tsx";
+import { Alert, AlertDescription } from "@/components/ui/alert.tsx";
+import { AlertTriangle } from "lucide-react";
 
 export default function DeleteAccountConfirm(props: PageProps<Extract<KcContext, { pageId: "delete-account-confirm.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -19,10 +21,12 @@ export default function DeleteAccountConfirm(props: PageProps<Extract<KcContext,
     return (
         <Template kcContext={kcContext} i18n={i18n} doUseDefaultCss={doUseDefaultCss} classes={classes} headerNode={msg("deleteAccountConfirm")}>
             <form action={url.loginAction} className="form-vertical flex flex-col gap-6 text-sm" method="post">
-                <div className="alert alert-warning" style={{ marginTop: "0", marginBottom: "30px" }}>
-                    <span className="pficon pficon-warning-triangle-o"></span>
-                    {msg("irreversibleAction")}
-                </div>
+                <Alert variant="warning">
+                    <AlertTriangle className="size-4"/>
+                    <AlertDescription className="font-semibold">
+                        {msg("irreversibleAction")}
+                    </AlertDescription>
+                </Alert>
                 <p>{msg("deletingImplies")}</p>
                 <ul className="list-disc list-inside text-muted-foreground">
                     <li>{msg("loggingOutImmediately")}</li>
