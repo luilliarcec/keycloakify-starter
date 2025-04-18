@@ -25,6 +25,7 @@ const LoginIdpLinkConfirm = lazy(() => import("./pages/LoginIdpLinkConfirm.tsx")
 const LoginIdpLinkEmail = lazy(() => import("./pages/LoginIdpLinkEmail.tsx"));
 const LoginPageExpired = lazy(() => import("./pages/LoginPageExpired.tsx"));
 const LoginUpdatePassword = lazy(() => import("./pages/LoginUpdatePassword.tsx"));
+const LoginUpdateProfile = lazy(() => import("./pages/LoginUpdateProfile.tsx"));
 const LoginOauth2DeviceVerifyUserCode = lazy(
     () => import("./pages/LoginOauth2DeviceVerifyUserCode.tsx")
 );
@@ -184,6 +185,16 @@ export default function KcPage(props: { kcContext: KcContext }) {
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
                                 doUseDefaultCss={false}
+                            />
+                        );
+                    case "login-update-profile.ftl":
+                        return (
+                            <LoginUpdateProfile
+                                {...{ kcContext, i18n, classes }}
+                                Template={Template}
+                                doUseDefaultCss={false}
+                                UserProfileFormFields={UserProfileFormFields}
+                                doMakeUserConfirmPassword={doMakeUserConfirmPassword}
                             />
                         );
                     default:
