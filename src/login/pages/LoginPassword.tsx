@@ -5,9 +5,9 @@ import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
 import { Label } from "@/components/ui/label.tsx";
 import TextLink from "@/components/text-link.tsx";
-import { Input } from "@/components/ui/input.tsx";
 import InputError from "@/components/input-error.tsx";
 import { Button } from "@/components/ui/button.tsx";
+import { PasswordInput } from "@/components/password-input.tsx";
 
 export default function LoginPassword(props: PageProps<Extract<KcContext, { pageId: "login-password.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -48,11 +48,10 @@ export default function LoginPassword(props: PageProps<Extract<KcContext, { page
                                         </TextLink>
                                     )}
                                 </div>
-                                <Input
+                                <PasswordInput
                                     id="password"
                                     tabIndex={2}
                                     name="password"
-                                    type="password"
                                     autoComplete="current-password"
                                     aria-invalid={messagesPerField.existsError("username", "password")}
                                 />
