@@ -35,7 +35,10 @@ const Code = lazy(() => import("./pages/Code.tsx"));
 const FrontchannelLogout = lazy(() => import("./pages/FrontchannelLogout.tsx"));
 const DeleteAccountConfirm = lazy(() => import("./pages/DeleteAccountConfirm.tsx"));
 const WebauthnError = lazy(() => import("./pages/WebauthnError.tsx"));
-const LoginIdpLinkConfirmOverride = lazy(() => import("./pages/LoginIdpLinkConfirmOverride.tsx"));
+const LoginX509Info = lazy(() => import("./pages/LoginX509Info.tsx"));
+const LoginIdpLinkConfirmOverride = lazy(
+    () => import("./pages/LoginIdpLinkConfirmOverride.tsx")
+);
 const LoginPasskeysConditionalAuthenticate = lazy(
     () => import("./pages/LoginPasskeysConditionalAuthenticate.tsx")
 );
@@ -308,6 +311,14 @@ export default function KcPage(props: { kcContext: KcContext }) {
                     case "login-idp-link-confirm-override.ftl":
                         return (
                             <LoginIdpLinkConfirmOverride
+                                {...{ kcContext, i18n, classes }}
+                                Template={Template}
+                                doUseDefaultCss={false}
+                            />
+                        );
+                    case "login-x509-info.ftl":
+                        return (
+                            <LoginX509Info
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
                                 doUseDefaultCss={false}
