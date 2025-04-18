@@ -35,6 +35,7 @@ export default function DeleteAccountConfirm(props: PageProps<Extract<KcContext,
                 <p className="delete-account-text">{msg("finalDeletionConfirmation")}</p>
                 <div id="kc-form-buttons" className="flex flex-col space-y-2">
                     <Button
+                        // variant="destructive"
                         className="w-full"
                         type="submit"
                         value={msgStr("doConfirmDelete")}
