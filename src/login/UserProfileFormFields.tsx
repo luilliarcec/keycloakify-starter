@@ -18,6 +18,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox.tsx";
 import { PasswordInput } from "@/components/password-input.tsx";
+import * as React from "react";
 
 export default function UserProfileFormFields(props: UserProfileFormFieldsProps<KcContext, I18n>) {
     const { kcContext, i18n, kcClsx, onIsFormSubmittableValueChange, doMakeUserConfirmPassword, BeforeField, AfterField } = props;
@@ -225,7 +226,7 @@ function InputFieldByType(props: InputFieldByTypeProps) {
                 return (
                     <>
                         {valueOrValues.map((...[, i]) => (
-                            <InputTag key={i} {...props} fieldIndex={i} />
+                            <CommonInputTag Component={Input} key={i} {...props} fieldIndex={i} />
                         ))}
                     </>
                 );
@@ -234,45 +235,72 @@ function InputFieldByType(props: InputFieldByTypeProps) {
             if (attribute.name === "password" || attribute.name === "password-confirm") {
                 return (
                     <div>
-                        <PasswordInputTag {...props} fieldIndex={undefined} />
+                        <CommonInputTag Component={PasswordInput} {...props} fieldIndex={undefined} />
                     </div>
                 );
             }
 
-            return <InputTag {...props} fieldIndex={undefined} />;
+            return <CommonInputTag Component={Input} {...props} fieldIndex={undefined} />;
         }
     }
 }
 
-function InputTag(props: InputFieldByTypeProps & { fieldIndex: number | undefined }) {
-    const { attribute, fieldIndex, kcClsx, dispatchFormAction, valueOrValues, i18n, displayableErrors } = props;
+function CommonInputTag(
+    props: InputFieldByTypeProps & {
+        fieldIndex: number | undefined;
+        Component: React.ElementType;
+    }
+) {
+    const { attribute, fieldIndex, kcClsx, dispatchFormAction, valueOrValues, i18n, displayableErrors, Component } = props;
 
     const { advancedMsgStr } = i18n;
 
+    const getValue = () => {
+        if (fieldIndex !== undefined) {
+            assert(valueOrValues instanceof Array);
+            return valueOrValues[fieldIndex];
+        }
+        assert(typeof valueOrValues === "string");
+        return valueOrValues;
+    };
+
+    const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        const updatedValue =
+            fieldIndex !== undefined ? valueOrValues.map((value, i) => (i === fieldIndex ? event.target.value : value)) : event.target.value;
+        dispatchFormAction({
+            action: "update",
+            name: attribute.name,
+            valueOrValues: updatedValue
+        });
+    };
+
+    const handleBlur = () => {
+        dispatchFormAction({
+            action: "focus lost",
+            name: attribute.name,
+            fieldIndex: fieldIndex
+        });
+    };
+
     return (
         <>
-            <Input
-                type={(() => {
-                    const { inputType } = attribute.annotations;
+            <Component
+                {...(Component === PasswordInput
+                    ? {}
+                    : {
+                          type: (() => {
+                              const { inputType } = attribute.annotations;
 
-                    if (inputType?.startsWith("html5-")) {
-                        return inputType.slice(6);
-                    }
+                              if (inputType?.startsWith("html5-")) {
+                                  return inputType.slice(6);
+                              }
 
-                    return inputType ?? "text";
-                })()}
+                              return inputType ?? "text";
+                          })()
+                      })}
                 id={attribute.name}
                 name={attribute.name}
-                value={(() => {
-                    if (fieldIndex !== undefined) {
-                        assert(valueOrValues instanceof Array);
-                        return valueOrValues[fieldIndex];
-                    }
-
-                    assert(typeof valueOrValues === "string");
-
-                    return valueOrValues;
-                })()}
+                value={getValue()}
                 className={kcClsx("kcInputClass")}
                 aria-invalid={displayableErrors.find(error => error.fieldIndex === fieldIndex) !== undefined}
                 disabled={attribute.readOnly}
@@ -292,128 +320,8 @@ function InputTag(props: InputFieldByTypeProps & { fieldIndex: number | undefine
                 min={attribute.annotations.inputTypeMin}
                 step={attribute.annotations.inputTypeStep}
                 {...Object.fromEntries(Object.entries(attribute.html5DataAnnotations ?? {}).map(([key, value]) => [`data-${key}`, value]))}
-                onChange={event =>
-                    dispatchFormAction({
-                        action: "update",
-                        name: attribute.name,
-                        valueOrValues: (() => {
-                            if (fieldIndex !== undefined) {
-                                assert(valueOrValues instanceof Array);
-
-                                return valueOrValues.map((value, i) => {
-                                    if (i === fieldIndex) {
-                                        return event.target.value;
-                                    }
-
-                                    return value;
-                                });
-                            }
-
-                            return event.target.value;
-                        })()
-                    })
-                }
-                onBlur={() =>
-                    dispatchFormAction({
-                        action: "focus lost",
-                        name: attribute.name,
-                        fieldIndex: fieldIndex
-                    })
-                }
-            />
-            {(() => {
-                if (fieldIndex === undefined) {
-                    return null;
-                }
-
-                assert(valueOrValues instanceof Array);
-
-                const values = valueOrValues;
-
-                return (
-                    <>
-                        <FieldErrors attribute={attribute} kcClsx={kcClsx} displayableErrors={displayableErrors} fieldIndex={fieldIndex} />
-                        <AddRemoveButtonsMultiValuedAttribute
-                            attribute={attribute}
-                            values={values}
-                            fieldIndex={fieldIndex}
-                            dispatchFormAction={dispatchFormAction}
-                            i18n={i18n}
-                        />
-                    </>
-                );
-            })()}
-        </>
-    );
-}
-
-function PasswordInputTag(props: InputFieldByTypeProps & { fieldIndex: number | undefined }) {
-    const { attribute, fieldIndex, kcClsx, dispatchFormAction, valueOrValues, i18n, displayableErrors } = props;
-
-    const { advancedMsgStr } = i18n;
-
-    return (
-        <>
-            <PasswordInput
-                id={attribute.name}
-                name={attribute.name}
-                value={(() => {
-                    if (fieldIndex !== undefined) {
-                        assert(valueOrValues instanceof Array);
-                        return valueOrValues[fieldIndex];
-                    }
-
-                    assert(typeof valueOrValues === "string");
-
-                    return valueOrValues;
-                })()}
-                className={kcClsx("kcInputClass")}
-                aria-invalid={displayableErrors.find(error => error.fieldIndex === fieldIndex) !== undefined}
-                disabled={attribute.readOnly}
-                autoComplete={attribute.autocomplete}
-                placeholder={
-                    attribute.annotations.inputTypePlaceholder === undefined ? undefined : advancedMsgStr(attribute.annotations.inputTypePlaceholder)
-                }
-                pattern={attribute.annotations.inputTypePattern}
-                size={attribute.annotations.inputTypeSize === undefined ? undefined : parseInt(`${attribute.annotations.inputTypeSize}`)}
-                maxLength={
-                    attribute.annotations.inputTypeMaxlength === undefined ? undefined : parseInt(`${attribute.annotations.inputTypeMaxlength}`)
-                }
-                minLength={
-                    attribute.annotations.inputTypeMinlength === undefined ? undefined : parseInt(`${attribute.annotations.inputTypeMinlength}`)
-                }
-                max={attribute.annotations.inputTypeMax}
-                min={attribute.annotations.inputTypeMin}
-                step={attribute.annotations.inputTypeStep}
-                {...Object.fromEntries(Object.entries(attribute.html5DataAnnotations ?? {}).map(([key, value]) => [`data-${key}`, value]))}
-                onChange={event =>
-                    dispatchFormAction({
-                        action: "update",
-                        name: attribute.name,
-                        valueOrValues: (() => {
-                            if (fieldIndex !== undefined) {
-                                assert(valueOrValues instanceof Array);
-
-                                return valueOrValues.map((value, i) => {
-                                    if (i === fieldIndex) {
-                                        return event.target.value;
-                                    }
-
-                                    return value;
-                                });
-                            }
-
-                            return event.target.value;
-                        })()
-                    })
-                }
-                onBlur={() =>
-                    dispatchFormAction({
-                        action: "focus lost",
-                        name: attribute.name,
-                        fieldIndex: fieldIndex
-                    })
-                }
+                onChange={handleChange}
+                onBlur={handleBlur}
             />
             {(() => {
                 if (fieldIndex === undefined) {
@@ -541,9 +449,7 @@ function InputTagSelects(props: InputFieldByTypeProps) {
                                 })
                             }
                         />
-                        <Label htmlFor={`${attribute.name}-${option}`}>
-                            {inputLabel(i18n, attribute, option)}
-                        </Label>
+                        <Label htmlFor={`${attribute.name}-${option}`}>{inputLabel(i18n, attribute, option)}</Label>
                     </div>
                 );
             });
