@@ -2,6 +2,7 @@ import { getKcClsx } from "keycloakify/login/lib/kcClsx";
 import type { PageProps } from "keycloakify/login/pages/PageProps";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
+import { Button } from "@/components/ui/button.tsx";
 
 export default function LoginX509Info(props: PageProps<Extract<KcContext, { pageId: "login-x509-info.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -17,7 +18,7 @@ export default function LoginX509Info(props: PageProps<Extract<KcContext, { page
 
     return (
         <Template kcContext={kcContext} i18n={i18n} doUseDefaultCss={doUseDefaultCss} classes={classes} headerNode={msg("doLogIn")}>
-            <form id="kc-x509-login-info" className={kcClsx("kcFormClass")} action={url.loginAction} method="post">
+            <form id="kc-x509-login-info" className="flex flex-col gap-6 text-sm text-muted-foreground" action={url.loginAction} method="post">
                 <div className={kcClsx("kcFormGroupClass")}>
                     <div className={kcClsx("kcLabelWrapperClass")}>
                         <label htmlFor="certificate_subjectDN" className={kcClsx("kcLabelClass")}>
@@ -26,7 +27,7 @@ export default function LoginX509Info(props: PageProps<Extract<KcContext, { page
                     </div>
                     {x509.formData.subjectDN ? (
                         <div className={kcClsx("kcLabelWrapperClass")}>
-                            <label id="certificate_subjectDN" className={kcClsx("kcLabelClass")}>
+                            <label id="certificate_subjectDN" className="text-black font-semibold">
                                 {x509.formData.subjectDN}
                             </label>
                         </div>
@@ -47,7 +48,7 @@ export default function LoginX509Info(props: PageProps<Extract<KcContext, { page
                                 </label>
                             </div>
                             <div className={kcClsx("kcLabelWrapperClass")}>
-                                <label id="username" className={kcClsx("kcLabelClass")}>
+                                <label id="username" className="text-black font-semibold">
                                     {x509.formData.username}
                                 </label>
                             </div>
@@ -59,24 +60,27 @@ export default function LoginX509Info(props: PageProps<Extract<KcContext, { page
                         <div className={kcClsx("kcFormOptionsWrapperClass")} />
                     </div>
                     <div id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
-                        <div className={kcClsx("kcFormButtonsWrapperClass")}>
-                            <input
-                                className={kcClsx("kcButtonClass", "kcButtonPrimaryClass", "kcButtonLargeClass")}
-                                name="login"
-                                id="kc-login"
+                        <Button
+                            className="w-full"
+                            name="login"
+                            id="kc-login"
+                            type="submit"
+                            value={msgStr("doContinue")}
+                        >
+                            {msgStr("doContinue")}
+                        </Button>
+                        {x509.formData.isUserEnabled && (
+                            <Button
+                                className="w-full mt-2"
+                                variant="outline"
+                                name="cancel"
+                                id="kc-cancel"
                                 type="submit"
-                                value={msgStr("doContinue")}
-                            />
-                            {x509.formData.isUserEnabled && (
-                                <input
-                                    className={kcClsx("kcButtonClass", "kcButtonDefaultClass", "kcButtonLargeClass")}
-                                    name="cancel"
-                                    id="kc-cancel"
-                                    type="submit"
-                                    value={msgStr("doIgnore")}
-                                />
-                            )}
-                        </div>
+                                value={msgStr("doIgnore")}
+                            >
+                                {msgStr("doIgnore")}
+                            </Button>
+                        )}
                     </div>
                 </div>
             </form>
