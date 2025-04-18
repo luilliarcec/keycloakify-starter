@@ -33,6 +33,7 @@ const LoginConfigTotp = lazy(() => import("./pages/LoginConfigTotp.tsx"));
 const DeleteCredential = lazy(() => import("./pages/DeleteCredential.tsx"));
 const Code = lazy(() => import("./pages/Code.tsx"));
 const FrontchannelLogout = lazy(() => import("./pages/FrontchannelLogout.tsx"));
+const DeleteAccountConfirm = lazy(() => import("./pages/DeleteAccountConfirm.tsx"));
 const LoginOauth2DeviceVerifyUserCode = lazy(
     () => import("./pages/LoginOauth2DeviceVerifyUserCode.tsx")
 );
@@ -259,6 +260,14 @@ export default function KcPage(props: { kcContext: KcContext }) {
                     case "frontchannel-logout.ftl":
                         return (
                             <FrontchannelLogout
+                                {...{ kcContext, i18n, classes }}
+                                Template={Template}
+                                doUseDefaultCss={false}
+                            />
+                        );
+                    case "delete-account-confirm.ftl":
+                        return (
+                            <DeleteAccountConfirm
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
                                 doUseDefaultCss={false}
