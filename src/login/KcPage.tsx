@@ -26,6 +26,7 @@ const LoginIdpLinkEmail = lazy(() => import("./pages/LoginIdpLinkEmail.tsx"));
 const LoginPageExpired = lazy(() => import("./pages/LoginPageExpired.tsx"));
 const LoginUpdatePassword = lazy(() => import("./pages/LoginUpdatePassword.tsx"));
 const LoginUpdateProfile = lazy(() => import("./pages/LoginUpdateProfile.tsx"));
+const LogoutConfirm = lazy(() => import("./pages/LogoutConfirm.tsx"));
 const LoginOauth2DeviceVerifyUserCode = lazy(
     () => import("./pages/LoginOauth2DeviceVerifyUserCode.tsx")
 );
@@ -195,6 +196,14 @@ export default function KcPage(props: { kcContext: KcContext }) {
                                 doUseDefaultCss={false}
                                 UserProfileFormFields={UserProfileFormFields}
                                 doMakeUserConfirmPassword={doMakeUserConfirmPassword}
+                            />
+                        );
+                    case "logout-confirm.ftl":
+                        return (
+                            <LogoutConfirm
+                                {...{ kcContext, i18n, classes }}
+                                Template={Template}
+                                doUseDefaultCss={false}
                             />
                         );
                     default:
