@@ -31,6 +31,7 @@ const UpdateEmail = lazy(() => import("./pages/UpdateEmail.tsx"));
 const IdpReviewUserProfile = lazy(() => import("./pages/IdpReviewUserProfile.tsx"));
 const LoginConfigTotp = lazy(() => import("./pages/LoginConfigTotp.tsx"));
 const DeleteCredential = lazy(() => import("./pages/DeleteCredential.tsx"));
+const Code = lazy(() => import("./pages/Code.tsx"));
 const LoginOauth2DeviceVerifyUserCode = lazy(
     () => import("./pages/LoginOauth2DeviceVerifyUserCode.tsx")
 );
@@ -241,6 +242,14 @@ export default function KcPage(props: { kcContext: KcContext }) {
                     case "delete-credential.ftl":
                         return (
                             <DeleteCredential
+                                {...{ kcContext, i18n, classes }}
+                                Template={Template}
+                                doUseDefaultCss={false}
+                            />
+                        );
+                    case "code.ftl":
+                        return (
+                            <Code
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
                                 doUseDefaultCss={false}
