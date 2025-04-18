@@ -21,6 +21,7 @@ const LoginVerifyEmail = lazy(() => import("./pages/LoginVerifyEmail"));
 const Terms = lazy(() => import("./pages/Terms.tsx"));
 const LoginOauthGrant = lazy(() => import("./pages/LoginOauthGrant.tsx"));
 const LoginOtp = lazy(() => import("./pages/LoginOtp.tsx"));
+const LoginIdpLinkConfirm = lazy(() => import("./pages/LoginIdpLinkConfirm.tsx"));
 const LoginOauth2DeviceVerifyUserCode = lazy(
     () => import("./pages/LoginOauth2DeviceVerifyUserCode.tsx")
 );
@@ -145,6 +146,14 @@ export default function KcPage(props: { kcContext: KcContext }) {
                     case "login-otp.ftl":
                         return (
                             <LoginOtp
+                                {...{ kcContext, i18n, classes }}
+                                Template={Template}
+                                doUseDefaultCss={false}
+                            />
+                        );
+                    case "login-idp-link-confirm.ftl":
+                        return (
+                            <LoginIdpLinkConfirm
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
                                 doUseDefaultCss={false}
