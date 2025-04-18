@@ -27,6 +27,7 @@ const LoginPageExpired = lazy(() => import("./pages/LoginPageExpired.tsx"));
 const LoginUpdatePassword = lazy(() => import("./pages/LoginUpdatePassword.tsx"));
 const LoginUpdateProfile = lazy(() => import("./pages/LoginUpdateProfile.tsx"));
 const LogoutConfirm = lazy(() => import("./pages/LogoutConfirm.tsx"));
+const UpdateEmail = lazy(() => import("./pages/UpdateEmail.tsx"));
 const LoginOauth2DeviceVerifyUserCode = lazy(
     () => import("./pages/LoginOauth2DeviceVerifyUserCode.tsx")
 );
@@ -204,6 +205,16 @@ export default function KcPage(props: { kcContext: KcContext }) {
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
                                 doUseDefaultCss={false}
+                            />
+                        );
+                    case "update-email.ftl":
+                        return (
+                            <UpdateEmail
+                                {...{ kcContext, i18n, classes }}
+                                Template={Template}
+                                doUseDefaultCss={true}
+                                UserProfileFormFields={UserProfileFormFields}
+                                doMakeUserConfirmPassword={doMakeUserConfirmPassword}
                             />
                         );
                     default:
