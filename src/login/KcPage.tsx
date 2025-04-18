@@ -35,6 +35,9 @@ const Code = lazy(() => import("./pages/Code.tsx"));
 const FrontchannelLogout = lazy(() => import("./pages/FrontchannelLogout.tsx"));
 const DeleteAccountConfirm = lazy(() => import("./pages/DeleteAccountConfirm.tsx"));
 const WebauthnError = lazy(() => import("./pages/WebauthnError.tsx"));
+const LoginPasskeysConditionalAuthenticate = lazy(
+    () => import("./pages/LoginPasskeysConditionalAuthenticate.tsx")
+);
 const LoginRecoveryAuthnCodeInput = lazy(
     () => import("./pages/LoginRecoveryAuthnCodeInput.tsx")
 );
@@ -288,6 +291,14 @@ export default function KcPage(props: { kcContext: KcContext }) {
                     case "webauthn-error.ftl":
                         return (
                             <WebauthnError
+                                {...{ kcContext, i18n, classes }}
+                                Template={Template}
+                                doUseDefaultCss={false}
+                            />
+                        );
+                    case "login-passkeys-conditional-authenticate.ftl":
+                        return (
+                            <LoginPasskeysConditionalAuthenticate
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
                                 doUseDefaultCss={false}
