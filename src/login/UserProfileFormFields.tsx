@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox.tsx";
+import { PasswordInput } from "@/components/password-input.tsx";
 
 export default function UserProfileFormFields(props: UserProfileFormFieldsProps<KcContext, I18n>) {
     const { kcContext, i18n, kcClsx, onIsFormSubmittableValueChange, doMakeUserConfirmPassword, BeforeField, AfterField } = props;
@@ -189,9 +190,9 @@ function FieldErrors(props: { attribute: Attribute; displayableErrors: FormField
         <ul id={`input-error-${attribute.name}${fieldIndex === undefined ? "" : `-${fieldIndex}`}`} aria-live="polite">
             {displayableErrors
                 .filter(error => error.fieldIndex === fieldIndex)
-                .map(({ errorMessage }, i) => (
+                .map(({ errorMessageStr }, i) => (
                     <InputError key={i} asList>
-                        {errorMessage}
+                        {errorMessageStr}
                     </InputError>
                 ))}
         </ul>
@@ -230,17 +231,15 @@ function InputFieldByType(props: InputFieldByTypeProps) {
                 );
             }
 
-            const inputNode = <InputTag {...props} fieldIndex={undefined} />;
-
             if (attribute.name === "password" || attribute.name === "password-confirm") {
                 return (
                     <div>
-                        {inputNode}
+                        <PasswordInputTag {...props} fieldIndex={undefined} />
                     </div>
                 );
             }
 
-            return inputNode;
+            return <InputTag {...props} fieldIndex={undefined} />;
         }
     }
 }
@@ -262,6 +261,100 @@ function InputTag(props: InputFieldByTypeProps & { fieldIndex: number | undefine
 
                     return inputType ?? "text";
                 })()}
+                id={attribute.name}
+                name={attribute.name}
+                value={(() => {
+                    if (fieldIndex !== undefined) {
+                        assert(valueOrValues instanceof Array);
+                        return valueOrValues[fieldIndex];
+                    }
+
+                    assert(typeof valueOrValues === "string");
+
+                    return valueOrValues;
+                })()}
+                className={kcClsx("kcInputClass")}
+                aria-invalid={displayableErrors.find(error => error.fieldIndex === fieldIndex) !== undefined}
+                disabled={attribute.readOnly}
+                autoComplete={attribute.autocomplete}
+                placeholder={
+                    attribute.annotations.inputTypePlaceholder === undefined ? undefined : advancedMsgStr(attribute.annotations.inputTypePlaceholder)
+                }
+                pattern={attribute.annotations.inputTypePattern}
+                size={attribute.annotations.inputTypeSize === undefined ? undefined : parseInt(`${attribute.annotations.inputTypeSize}`)}
+                maxLength={
+                    attribute.annotations.inputTypeMaxlength === undefined ? undefined : parseInt(`${attribute.annotations.inputTypeMaxlength}`)
+                }
+                minLength={
+                    attribute.annotations.inputTypeMinlength === undefined ? undefined : parseInt(`${attribute.annotations.inputTypeMinlength}`)
+                }
+                max={attribute.annotations.inputTypeMax}
+                min={attribute.annotations.inputTypeMin}
+                step={attribute.annotations.inputTypeStep}
+                {...Object.fromEntries(Object.entries(attribute.html5DataAnnotations ?? {}).map(([key, value]) => [`data-${key}`, value]))}
+                onChange={event =>
+                    dispatchFormAction({
+                        action: "update",
+                        name: attribute.name,
+                        valueOrValues: (() => {
+                            if (fieldIndex !== undefined) {
+                                assert(valueOrValues instanceof Array);
+
+                                return valueOrValues.map((value, i) => {
+                                    if (i === fieldIndex) {
+                                        return event.target.value;
+                                    }
+
+                                    return value;
+                                });
+                            }
+
+                            return event.target.value;
+                        })()
+                    })
+                }
+                onBlur={() =>
+                    dispatchFormAction({
+                        action: "focus lost",
+                        name: attribute.name,
+                        fieldIndex: fieldIndex
+                    })
+                }
+            />
+            {(() => {
+                if (fieldIndex === undefined) {
+                    return null;
+                }
+
+                assert(valueOrValues instanceof Array);
+
+                const values = valueOrValues;
+
+                return (
+                    <>
+                        <FieldErrors attribute={attribute} kcClsx={kcClsx} displayableErrors={displayableErrors} fieldIndex={fieldIndex} />
+                        <AddRemoveButtonsMultiValuedAttribute
+                            attribute={attribute}
+                            values={values}
+                            fieldIndex={fieldIndex}
+                            dispatchFormAction={dispatchFormAction}
+                            i18n={i18n}
+                        />
+                    </>
+                );
+            })()}
+        </>
+    );
+}
+
+function PasswordInputTag(props: InputFieldByTypeProps & { fieldIndex: number | undefined }) {
+    const { attribute, fieldIndex, kcClsx, dispatchFormAction, valueOrValues, i18n, displayableErrors } = props;
+
+    const { advancedMsgStr } = i18n;
+
+    return (
+        <>
+            <PasswordInput
                 id={attribute.name}
                 name={attribute.name}
                 value={(() => {
