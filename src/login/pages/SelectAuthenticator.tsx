@@ -5,6 +5,9 @@ import type { I18n } from "../i18n";
 import { Button } from "@/components/ui/button.tsx";
 import { Separator } from "@/components/ui/separator.tsx";
 import { ChevronRight } from "lucide-react";
+import { faKey, faUnlockKeyhole, faMobileScreen, faShieldHalved } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { IconDefinition } from "@fortawesome/free-brands-svg-icons";
 
 export default function SelectAuthenticator(
     props: PageProps<
@@ -45,23 +48,19 @@ export default function SelectAuthenticator(
                                 value={authenticationSelection.authExecId}
                                 className="py-12 my-2 w-full text-sm"
                             >
-                                <div className="flex w-[90%] text-left text-wrap">
-                                    <div className={kcClsx("kcSelectAuthListItemIconClass")}>
-                                        <i className={kcClsx("kcSelectAuthListItemIconPropertyClass", authenticationSelection.iconCssClass)} />
-                                    </div>
+                                <FontAwesomeIcon icon={icon(authenticationSelection.displayName)} className="text-gray-500" />
 
+                                <div className="flex w-[80%] text-left text-wrap">
                                     <div className={kcClsx("kcSelectAuthListItemBodyClass")}>
                                         <div className={kcClsx("kcSelectAuthListItemHeadingClass")}>
                                             {advancedMsg(authenticationSelection.displayName)}
                                         </div>
-                                        <div className="text-muted-foreground font-normal">
-                                            {advancedMsg(authenticationSelection.helpText)}
-                                        </div>
+                                        <div className="text-muted-foreground font-normal">{advancedMsg(authenticationSelection.helpText)}</div>
                                     </div>
                                     <div className={kcClsx("kcSelectAuthListItemFillClass")} />
                                 </div>
 
-                                <ChevronRight className="size-4"/>
+                                <ChevronRight className="size-4" />
                             </Button>
                         </div>
                     ))}
@@ -69,4 +68,19 @@ export default function SelectAuthenticator(
             </form>
         </Template>
     );
+}
+
+function icon(displayName: string): IconDefinition {
+    switch (displayName) {
+        case "webauthn-display-name":
+            return faKey;
+        case "webauthn-passwordless-display-name":
+            return faKey;
+        case "otp-display-name":
+            return faMobileScreen;
+        case "auth-username-password-form-display-name":
+            return faUnlockKeyhole;
+        default:
+            return faShieldHalved;
+    }
 }
