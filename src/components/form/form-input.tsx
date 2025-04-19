@@ -3,9 +3,12 @@ import * as React from "react";
 import { assert } from "keycloakify/tools/assert";
 import { PasswordInput } from "@/components/password-input.tsx";
 import FormErrors from "@/components/form/form-errors.tsx";
-// import type { Attribute } from "keycloakify/login/KcContext";
-// import { FormAction, getButtonToDisplayForMultivaluedAttributeField } from "keycloakify/login/lib/useUserProfileForm";
-// import type { I18n } from "@/login/i18n.ts";
+import type { Attribute } from "keycloakify/login/KcContext";
+import {
+    FormAction,
+    getButtonToDisplayForMultivaluedAttributeField
+} from "keycloakify/login/lib/useUserProfileForm";
+import type { I18n } from "@/login/i18n.ts";
 
 export default function FormInput(
     props: FormInputProps & {
@@ -131,78 +134,83 @@ export default function FormInput(
                 assert(valueOrValues instanceof Array);
 
                 return (
-                    <>
+                    <div className="flex flex-col mb-2 text-sm space-y-1">
+                        <AddRemoveButtonsMultiValuedAttribute
+                            attribute={attribute}
+                            values={valueOrValues}
+                            fieldIndex={fieldIndex}
+                            dispatchFormAction={dispatchFormAction}
+                            i18n={i18n}
+                        />
+
                         <FormErrors
                             attribute={attribute}
                             displayableErrors={displayableErrors}
                             fieldIndex={fieldIndex}
                         />
-                        {/*<AddRemoveButtonsMultiValuedAttribute*/}
-                        {/*    attribute={attribute}*/}
-                        {/*    values={valueOrValues}*/}
-                        {/*    fieldIndex={fieldIndex}*/}
-                        {/*    dispatchFormAction={dispatchFormAction}*/}
-                        {/*    i18n={i18n}*/}
-                        {/*/>*/}
-                    </>
+                    </div>
                 );
             })()}
         </>
     );
 }
 
-// function AddRemoveButtonsMultiValuedAttribute(props: {
-//     attribute: Attribute;
-//     values: string[];
-//     fieldIndex: number;
-//     dispatchFormAction: React.Dispatch<Extract<FormAction, { action: "update" }>>;
-//     i18n: I18n;
-// }) {
-//     const { attribute, values, fieldIndex, dispatchFormAction, i18n } = props;
-//
-//     const { msg } = i18n;
-//
-//     const { hasAdd, hasRemove } = getButtonToDisplayForMultivaluedAttributeField({ attribute, values, fieldIndex });
-//
-//     const idPostfix = `-${attribute.name}-${fieldIndex + 1}`;
-//
-//     return (
-//         <>
-//             {hasRemove && (
-//                 <>
-//                     <button
-//                         id={`kc-remove${idPostfix}`}
-//                         type="button"
-//                         className="pf-c-button pf-m-inline pf-m-link"
-//                         onClick={() =>
-//                             dispatchFormAction({
-//                                 action: "update",
-//                                 name: attribute.name,
-//                                 valueOrValues: values.filter((_, i) => i !== fieldIndex)
-//                             })
-//                         }
-//                     >
-//                         {msg("remove")}
-//                     </button>
-//                     {hasAdd ? <>&nbsp;|&nbsp;</> : null}
-//                 </>
-//             )}
-//             {hasAdd && (
-//                 <button
-//                     id={`kc-add${idPostfix}`}
-//                     type="button"
-//                     className="pf-c-button pf-m-inline pf-m-link"
-//                     onClick={() =>
-//                         dispatchFormAction({
-//                             action: "update",
-//                             name: attribute.name,
-//                             valueOrValues: [...values, ""]
-//                         })
-//                     }
-//                 >
-//                     {msg("addValue")}
-//                 </button>
-//             )}
-//         </>
-//     );
-// }
+function AddRemoveButtonsMultiValuedAttribute(props: {
+    attribute: Attribute;
+    values: string[];
+    fieldIndex: number;
+    dispatchFormAction: React.Dispatch<Extract<FormAction, { action: "update" }>>;
+    i18n: I18n;
+}) {
+    const { attribute, values, fieldIndex, dispatchFormAction, i18n } = props;
+
+    const { msg } = i18n;
+
+    const { hasAdd, hasRemove } = getButtonToDisplayForMultivaluedAttributeField({
+        attribute,
+        values,
+        fieldIndex
+    });
+
+    const idPostfix = `-${attribute.name}-${fieldIndex + 1}`;
+
+    return (
+        <div className="flex flex-row text-xs -mt-1">
+            {hasRemove && (
+                <>
+                    <button
+                        id={`kc-remove${idPostfix}`}
+                        type="button"
+                        className="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
+                        onClick={() =>
+                            dispatchFormAction({
+                                action: "update",
+                                name: attribute.name,
+                                valueOrValues: values.filter((_, i) => i !== fieldIndex)
+                            })
+                        }
+                    >
+                        {msg("remove")}
+                    </button>
+                    {hasAdd ? <>&nbsp;|&nbsp;</> : null}
+                </>
+            )}
+            {hasAdd && (
+                <button
+                    id={`kc-add${idPostfix}`}
+                    type="button"
+                    className="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
+                    onClick={() =>
+                        dispatchFormAction({
+                            action: "update",
+                            name: attribute.name,
+                            valueOrValues: [...values, ""]
+                        })
+                    }
+                >
+                    {msg("addValue")}
+                </button>
+            )}
+        </div>
+    );
+}

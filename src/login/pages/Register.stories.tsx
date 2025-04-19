@@ -296,7 +296,7 @@ export const WithMultiselectPet: Story = {
                                 inputOptionLabelsI18nPrefix: "profile.attributes.favoritePet.options"
                             },
                             required: false,
-                            readOnly: false,
+                            readOnly: false
                         } satisfies Attribute
                     }
                 },
@@ -306,6 +306,33 @@ export const WithMultiselectPet: Story = {
                         "profile.attributes.favoritePet.options.cat": "Fluffy Cat",
                         "profile.attributes.favoritePet.options.dog": "Loyal Dog",
                         "profile.attributes.favoritePet.options.fish": "Peaceful Fish"
+                    }
+                }
+            }}
+        />
+    )
+};
+
+export const WithMultivaluedInput: Story = {
+    render: () => (
+        <KcPageStory
+            kcContext={{
+                profile: {
+                    attributesByName: {
+                        languages: {
+                            name: "languages",
+                            displayName: "Languages",
+                            multivalued: true,
+                            values: ["js", "php"],
+                            validators: {
+                                options: {
+                                    options: ["js", "php", "python"],
+                                },
+                            },
+                            annotations: {
+                                inputType: "input",
+                            },
+                        }
                     }
                 }
             }}
