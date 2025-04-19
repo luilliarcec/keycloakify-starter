@@ -37,7 +37,10 @@ const DeleteAccountConfirm = lazy(() => import("./pages/DeleteAccountConfirm.tsx
 const WebauthnError = lazy(() => import("./pages/WebauthnError.tsx"));
 const LoginX509Info = lazy(() => import("./pages/LoginX509Info.tsx"));
 const SelectAuthenticator = lazy(() => import("./pages/SelectAuthenticator.tsx"));
-const LoginRecoveryAuthnCodeConfig = lazy(() => import("./pages/LoginRecoveryAuthnCodeConfig.tsx"));
+const LoginResetOtp = lazy(() => import("./pages/LoginResetOtp.tsx"));
+const LoginRecoveryAuthnCodeConfig = lazy(
+    () => import("./pages/LoginRecoveryAuthnCodeConfig.tsx")
+);
 const LoginIdpLinkConfirmOverride = lazy(
     () => import("./pages/LoginIdpLinkConfirmOverride.tsx")
 );
@@ -337,6 +340,14 @@ export default function KcPage(props: { kcContext: KcContext }) {
                     case "login-recovery-authn-code-config.ftl":
                         return (
                             <LoginRecoveryAuthnCodeConfig
+                                {...{ kcContext, i18n, classes }}
+                                Template={Template}
+                                doUseDefaultCss={false}
+                            />
+                        );
+                    case "login-reset-otp.ftl":
+                        return (
+                            <LoginResetOtp
                                 {...{ kcContext, i18n, classes }}
                                 Template={Template}
                                 doUseDefaultCss={false}
