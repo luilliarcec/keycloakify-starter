@@ -7,10 +7,15 @@ import {
 } from "@/components/ui/select.tsx";
 import { FormInputProps } from "@/utils/types.ts";
 import { getFormInputLabel, getFormOptions } from "@/utils/utils.ts";
+import { assert } from "keycloakify/tools/assert";
 
 export default function FormSelect(props: FormInputProps) {
     const { attribute, dispatchFormAction, displayableErrors, i18n, valueOrValues } =
         props;
+
+    const { inputType } = attribute.annotations;
+
+    assert(inputType === "select");
 
     const options = getFormOptions(attribute);
 
