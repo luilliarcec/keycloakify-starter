@@ -14,6 +14,7 @@ import FormErrors from "@/components/form/form-errors.tsx";
 import FormCheckbox from "@/components/form/form-checkbox.tsx";
 import FormRadio from "@/components/form/form-radio.tsx";
 import FormGroupDescription from "@/components/form/form-group-description.tsx";
+import FormMultiselect from "@/components/form/form-multiselect.tsx";
 
 export default function UserProfileFormFields(props: UserProfileFormFieldsProps<KcContext, I18n>) {
     const { kcContext, i18n, kcClsx, onIsFormSubmittableValueChange, doMakeUserConfirmPassword, BeforeField, AfterField } = props;
@@ -126,8 +127,8 @@ function InputFactory(props: FormInputProps) {
             return <FormRadio {...props} />;
         case "multiselect-checkboxes":
             return <FormCheckbox {...props} />;
-        // case "multiselect":
-        //     return <InputTagSelects {...props} />;
+        case "multiselect":
+            return <FormMultiselect {...props} />;
         default: {
             if (valueOrValues instanceof Array) {
                 return (
