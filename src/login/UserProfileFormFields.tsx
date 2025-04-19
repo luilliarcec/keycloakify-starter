@@ -1,3 +1,4 @@
+import * as React from "react";
 import { Fragment, useEffect } from "react";
 import { assert } from "keycloakify/tools/assert";
 import type { KcClsx } from "keycloakify/login/lib/kcClsx";
@@ -18,7 +19,6 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Checkbox } from "@/components/ui/checkbox.tsx";
 import { PasswordInput } from "@/components/password-input.tsx";
-import * as React from "react";
 
 export default function UserProfileFormFields(props: UserProfileFormFieldsProps<KcContext, I18n>) {
     const { kcContext, i18n, kcClsx, onIsFormSubmittableValueChange, doMakeUserConfirmPassword, BeforeField, AfterField } = props;
@@ -216,10 +216,11 @@ function InputFieldByType(props: InputFieldByTypeProps) {
         case "textarea":
             return <TextareaTag {...props} />;
         case "select":
-        case "multiselect":
             return <SelectTag {...props} />;
+        // TODO: WIP Refactoring
         case "select-radiobuttons":
         case "multiselect-checkboxes":
+        case "multiselect":
             return <InputTagSelects {...props} />;
         default: {
             if (valueOrValues instanceof Array) {
@@ -260,17 +261,31 @@ function CommonInputTag(
             assert(valueOrValues instanceof Array);
             return valueOrValues[fieldIndex];
         }
+
         assert(typeof valueOrValues === "string");
+
         return valueOrValues;
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        const updatedValue =
-            fieldIndex !== undefined ? valueOrValues.map((value, i) => (i === fieldIndex ? event.target.value : value)) : event.target.value;
         dispatchFormAction({
             action: "update",
             name: attribute.name,
-            valueOrValues: updatedValue
+            valueOrValues: (() => {
+                if (fieldIndex !== undefined) {
+                    assert(valueOrValues instanceof Array);
+
+                    return valueOrValues.map((value, i) => {
+                        if (i === fieldIndex) {
+                            return event.target.value;
+                        }
+
+                        return value;
+                    });
+                }
+
+                return event.target.value;
+            })()
         });
     };
 
@@ -418,7 +433,7 @@ function InputTagSelects(props: InputFieldByTypeProps) {
         case "multiselect-checkboxes":
             return options.map(option => {
                 return (
-                    <div className="flex items-center space-x-3">
+                    <div key={option} className="flex items-center space-x-3">
                         <Checkbox
                             key={option}
                             id={`${attribute.name}-${option}`}
@@ -456,7 +471,7 @@ function InputTagSelects(props: InputFieldByTypeProps) {
     }
 }
 
-function extractOptions(attribute: any): string[] {
+function extractOptions(attribute: Attribute): string[] {
     walk: {
         const { inputOptionsFromValidation } = attribute.annotations;
 
@@ -485,8 +500,6 @@ function TextareaTag(props: InputFieldByTypeProps) {
 
     assert(typeof valueOrValues === "string");
 
-    const value = valueOrValues;
-
     return (
         <Textarea
             id={attribute.name}
@@ -497,7 +510,7 @@ function TextareaTag(props: InputFieldByTypeProps) {
             cols={attribute.annotations.inputTypeCols === undefined ? undefined : parseInt(`${attribute.annotations.inputTypeCols}`)}
             rows={attribute.annotations.inputTypeRows === undefined ? undefined : parseInt(`${attribute.annotations.inputTypeRows}`)}
             maxLength={attribute.annotations.inputTypeMaxlength === undefined ? undefined : parseInt(`${attribute.annotations.inputTypeMaxlength}`)}
-            value={value}
+            value={valueOrValues}
             onChange={event =>
                 dispatchFormAction({
                     action: "update",
