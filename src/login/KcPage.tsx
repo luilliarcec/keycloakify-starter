@@ -5,6 +5,7 @@ import { useI18n } from "./i18n";
 import DefaultPage from "keycloakify/login/DefaultPage";
 import Template from "./Template";
 import "./main.css";
+import { ThemeProvider } from "@/components/theme-provider.tsx";
 
 const UserProfileFormFields = lazy(() => import("./UserProfileFormFields"));
 
@@ -56,7 +57,26 @@ const LoginOauth2DeviceVerifyUserCode = lazy(
 
 const doMakeUserConfirmPassword = true;
 
+// const theme_dark = createTheme({
+//     palette: {
+//         mode: "dark"
+//     }
+// });
+// const theme_light = createTheme({
+//     palette: {
+//         mode: "light"
+//     }
+// });
+
 export default function KcPage(props: { kcContext: KcContext }) {
+    return (
+        <ThemeProvider defaultTheme="system" storageKey="ui-theme">
+            <KcPageContextualized {...props} />
+        </ThemeProvider>
+    );
+}
+
+function KcPageContextualized(props: { kcContext: KcContext }) {
     const { kcContext } = props;
 
     const { i18n } = useI18n({ kcContext });
