@@ -21,6 +21,8 @@ services:
     keycloak:
         image: quay.io/keycloak/keycloak:26.2.0
         container_name: keycloak
+        volumes:
+            -   "./dist_keycloak/keycloak-theme-for-kc-all-other-versions.jar:/opt/keycloak/providers/keycloak-theme.jar"
         environment:
             DB_VENDOR: postgres
             DB_ADDR: postgres
