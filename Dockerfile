@@ -1,8 +1,10 @@
 # Usa una imagen base de Node.js
 FROM node:22
 
-# Instala xdg-utils
-RUN apt-get update && apt-get install -y xdg-utils
+# Instala xdg-utils and unix packages
+RUN apt-get update && apt-get install -y  \
+    xdg-utils \
+    maven
 
 # Establece el directorio de trabajo
 WORKDIR /usr/src/app
