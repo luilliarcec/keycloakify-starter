@@ -14,6 +14,7 @@ const { useI18n, ofTypeI18n } = i18nBuilder
             alreadyHaveAccount: "Already have an account?",
             registerTitle: "Create an account",
             loginAccountTitle: "Log in to your account",
+            multiselectPlaceholder: "{0} Selected items"
         },
         es: {
             noAccount: "¿No tienes una cuenta?",
@@ -23,6 +24,7 @@ const { useI18n, ofTypeI18n } = i18nBuilder
             alreadyHaveAccount: "¿Ya tienes una cuenta creada?",
             registerTitle: "Crear una cuenta",
             loginAccountTitle: "Ingresar a tu cuenta",
+            multiselectPlaceholder: "{0} Elementos seleccionados"
         },
     })
     .build();
