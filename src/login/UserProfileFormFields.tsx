@@ -15,6 +15,8 @@ import FormCheckbox from "@/components/form/form-checkbox.tsx";
 import FormRadio from "@/components/form/form-radio.tsx";
 import FormGroupDescription from "@/components/form/form-group-description.tsx";
 import FormMultiselect from "@/components/form/form-multiselect.tsx";
+import { cn } from "@/lib/utils.ts";
+import { Attribute } from "keycloakify/login";
 
 export default function UserProfileFormFields(props: UserProfileFormFieldsProps<KcContext, I18n>) {
     const { kcContext, i18n, kcClsx, onIsFormSubmittableValueChange, doMakeUserConfirmPassword, BeforeField, AfterField } = props;
@@ -36,6 +38,18 @@ export default function UserProfileFormFields(props: UserProfileFormFieldsProps<
 
     const groupNameRef = { current: "" };
 
+    const inputsHidden = ["locale"];
+
+    const isInputHidden = (attribute: Attribute) => {
+        const { inputType } = attribute.annotations;
+
+        const type = inputType?.startsWith("html5-") ? inputType.slice(6) : inputType;
+
+        if (type === "hidden") return true;
+
+        return (attribute.name === "password-confirm" && !doMakeUserConfirmPassword) || inputsHidden.includes(attribute.name);
+    };
+
     return (
         <>
             {formFieldStates.map(({ attribute, displayableErrors, valueOrValues }) => {
@@ -54,12 +68,7 @@ export default function UserProfileFormFields(props: UserProfileFormFieldsProps<
                             />
                         )}
 
-                        <div
-                            className="flex flex-col gap-6"
-                            style={{
-                                display: attribute.name === "password-confirm" && !doMakeUserConfirmPassword ? "none" : undefined
-                            }}
-                        >
+                        <div className={cn("flex flex-col gap-6", isInputHidden(attribute) ? "hidden" : "")}>
                             <div className="grid gap-2">
                                 <Label htmlFor={attribute.name}>
                                     {advancedMsg(attribute.displayName ?? "")} {attribute.required && <> *</>}

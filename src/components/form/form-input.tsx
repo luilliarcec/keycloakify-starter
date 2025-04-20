@@ -28,10 +28,6 @@ export default function FormInput(
 
     const { advancedMsgStr } = i18n;
 
-    const hiddens = [
-        "locale",
-    ];
-
     const getValue = () => {
         if (fieldIndex !== undefined) {
             assert(valueOrValues instanceof Array);
@@ -80,10 +76,6 @@ export default function FormInput(
                     ? {}
                     : {
                           type: (() => {
-                              if (hiddens.includes(attribute.name)) {
-                                  return "hidden";
-                              }
-
                               const { inputType } = attribute.annotations;
 
                               if (inputType?.startsWith("html5-")) {
