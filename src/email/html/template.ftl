@@ -306,6 +306,10 @@
             word-break: break-all;
         }
 
+        .text-center {
+            text-align: center;
+        }
+
         @media only screen and (max-width: 600px) {
             .inner-body {
                 width: 100% !important;
@@ -331,12 +335,12 @@
             <table class="content" width="100%" cellpadding="0" cellspacing="0" role="presentation">
                 <tr>
                     <td class="header">
-                        <#if email.logoUrl??>
+                        <#if msg("email.logoUrl") != "email.logoUrl">
                             <a href="${kcSanitize(msg("email.logoAppLink"))?no_esc}" style="display: inline-block;">
                                 <img src="${kcSanitize(msg("email.logoUrl"))?no_esc}" class="logo" alt="Realm Logo">
                             </a>
                         <#else>
-                            ${realmName}
+                            <h1 class="h1 text-center">${realmName}</h1>
                         </#if>
                     </td>
                 </tr>
