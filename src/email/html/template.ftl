@@ -330,7 +330,13 @@
     <tr>
         <td align="center">
             <table class="content" width="100%" cellpadding="0" cellspacing="0" role="presentation">
-                {{ $header ?? '' }}
+                <tr>
+                    <td class="header">
+                        <a href="${kcSanitize(msg("email.logoAppLink",realmName))?no_esc}" style="display: inline-block;">
+                            <img src="${kcSanitize(msg("email.logoUrl",realmName))?no_esc}" class="logo" alt="Laravel Logo">
+                        </a>
+                    </td>
+                </tr>
 
                 <!-- Email Body -->
                 <tr>
@@ -342,14 +348,32 @@
                                 <td class="content-cell">
                                     <#nested>
 
-                                    {{ $subcopy ?? '' }}
+                                    <#if subcopy??>
+                                        <table class="subcopy" width="100%" cellpadding="0" cellspacing="0" role="presentation">
+                                            <tr>
+                                                <td>
+                                                    <#nested "subcopy">
+                                                </td>
+                                            </tr>
+                                        </table>
+                                    </#if>
                                 </td>
                             </tr>
                         </table>
                     </td>
                 </tr>
 
-                {{ $footer ?? '' }}
+                <tr>
+                    <td>
+                        <table class="footer" align="center" width="570" cellpadding="0" cellspacing="0" role="presentation">
+                            <tr>
+                                <td class="content-cell" align="center">
+                                    © ${.now?string("yyyy")} AuthOS. ${kcSanitize(msg("email.footer",realmName))?no_esc}
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
             </table>
         </td>
     </tr>
