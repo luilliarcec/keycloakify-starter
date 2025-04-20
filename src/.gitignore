@@ -1,6 +1,7 @@
 # This file is managed by Keycloakify, do not edit it manually.
 
 # === Owned files start ===
+# email/html/template.ftl
 # === Owned files end =====
 
 # === @keycloakify/email-native v260007.0.0 ===
@@ -14,7 +15,6 @@
 /email/html/identity-provider-link.ftl
 /email/html/email-verification.ftl
 /email/html/event-user_disabled_by_temporary_lockout.ftl
-/email/html/template.ftl
 /email/html/email-test.ftl
 /email/html/event-update_password.ftl
 /email/html/org-invite.ftl
