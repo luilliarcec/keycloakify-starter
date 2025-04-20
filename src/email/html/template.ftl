@@ -322,7 +322,6 @@
             }
         }
     </style>
-    {{ $head ?? '' }}
 </head>
 <body>
 
@@ -332,9 +331,13 @@
             <table class="content" width="100%" cellpadding="0" cellspacing="0" role="presentation">
                 <tr>
                     <td class="header">
-                        <a href="${kcSanitize(msg("email.logoAppLink",realmName))?no_esc}" style="display: inline-block;">
-                            <img src="${kcSanitize(msg("email.logoUrl",realmName))?no_esc}" class="logo" alt="Laravel Logo">
-                        </a>
+                        <#if email.logoUrl??>
+                            <a href="${kcSanitize(msg("email.logoAppLink"))?no_esc}" style="display: inline-block;">
+                                <img src="${kcSanitize(msg("email.logoUrl"))?no_esc}" class="logo" alt="Realm Logo">
+                            </a>
+                        <#else>
+                            ${realmName}
+                        </#if>
                     </td>
                 </tr>
 
@@ -368,7 +371,7 @@
                         <table class="footer" align="center" width="570" cellpadding="0" cellspacing="0" role="presentation">
                             <tr>
                                 <td class="content-cell" align="center">
-                                    © ${.now?string("yyyy")} AuthOS. ${kcSanitize(msg("email.footer",realmName))?no_esc}
+                                    © ${.now?string("yyyy")} AuthOS. ${kcSanitize(msg("email.footer"))?no_esc}
                                 </td>
                             </tr>
                         </table>
