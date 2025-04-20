@@ -34,7 +34,7 @@ export default function FormSelect(props: FormInputProps) {
                 })
             }
         >
-            <SelectTrigger name={attribute.name} className="w-full" tabIndex={1}>
+            <SelectTrigger name={attribute.name} className="w-full">
                 <SelectValue id={attribute.name} placeholder={valueOrValues} />
             </SelectTrigger>
             <SelectContent>
