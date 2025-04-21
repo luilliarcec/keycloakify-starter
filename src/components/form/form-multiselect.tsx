@@ -1,5 +1,8 @@
 import { FormInputProps } from "@/utils/types.ts";
-import { getFormInputLabel, getFormOptions } from "@/utils/utils.ts";
+import {
+    getFormInputLabel,
+    getFormOptions
+} from "@/utils/utils.ts";
 import { assert } from "keycloakify/tools/assert";
 import {
     DropdownMenu,
@@ -31,10 +34,7 @@ export default function FormMultiselect(props: FormInputProps) {
                     disabled={attribute.readOnly}
                     aria-invalid={displayableErrors.length !== 0}
                 >
-                    {i18n.msg(
-                        "multiselectPlaceholder",
-                        (valueOrValues.length - 1).toString()
-                    )}
+                    {i18n.msg("multiselectPlaceholder", valueOrValues.length.toString())}
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-[360px]">
                     {options.map(option => (
@@ -56,10 +56,7 @@ export default function FormMultiselect(props: FormInputProps) {
                                             if (checked) {
                                                 newValues.push(option);
                                             } else {
-                                                newValues.splice(
-                                                    newValues.indexOf(option),
-                                                    1
-                                                );
+                                                newValues.splice(newValues.indexOf(option), 1);
                                             }
 
                                             return newValues;

@@ -33,6 +33,7 @@ export default function FormSelect(props: FormInputProps) {
                     })()
                 })
             }
+            defaultValue={valueOrValues instanceof Array ? valueOrValues[0] : valueOrValues}
         >
             <SelectTrigger name={attribute.name} className="w-full">
                 <SelectValue id={attribute.name} placeholder={valueOrValues} />
