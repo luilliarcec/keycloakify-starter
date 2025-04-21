@@ -26,7 +26,7 @@ function SelectTrigger({
   className,
   children,
   ...props
-}: React.ComponentProps<typeof SelectPrimitive.Trigger>) {
+}: React.ComponentProps<typeof SelectPrimitive.Trigger>  & { children: React.ReactNode }) {
   return (
     <SelectPrimitive.Trigger
       data-slot="select-trigger"
