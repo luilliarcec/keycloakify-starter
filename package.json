@@ -1,6 +1,6 @@
 {
-    "name": "authos-theme",
-    "version": "1.0.0",
+    "name": "keycloakify-starter",
+    "version": "0.0.0",
     "description": "Starter for Keycloakify 11",
     "repository": {
         "type": "git",

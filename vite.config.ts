@@ -10,7 +10,9 @@ export default defineConfig({
         react(),
         tailwindcss(),
         keycloakify({
-            accountThemeImplementation: "none"
+            themeName: "authos-theme",
+            themeVersion: "1.0.0",
+            accountThemeImplementation: "Single-Page"
         })
     ],
     resolve: {
