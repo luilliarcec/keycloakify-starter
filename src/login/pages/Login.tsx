@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import InputError from "@/components/input-error";
+import Errors from "@/components/errors.tsx";
 import TextLink from "@/components/text-link";
 import SocialProvidersButtons from "@/components/social-providers-buttons.tsx";
 import { PasswordInput } from "@/components/password-input.tsx";
@@ -59,8 +59,8 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                             {!realm.loginWithEmailAllowed
                                                 ? msg("username")
                                                 : !realm.registrationEmailAsUsername
-                                                    ? msg("usernameOrEmail")
-                                                    : msg("email")}
+                                                  ? msg("usernameOrEmail")
+                                                  : msg("email")}
                                         </Label>
                                         <Input
                                             id="username"
@@ -73,7 +73,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                             aria-invalid={messagesPerField.existsError("username", "password")}
                                         />
                                         {messagesPerField.existsError("username", "password") && (
-                                            <InputError>{kcSanitize(messagesPerField.getFirstError("username", "password"))}</InputError>
+                                            <Errors>{kcSanitize(messagesPerField.getFirstError("username", "password"))}</Errors>
                                         )}
                                     </div>
                                 </div>
@@ -97,7 +97,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                         aria-invalid={messagesPerField.existsError("username", "password")}
                                     />
                                     {usernameHidden && messagesPerField.existsError("username", "password") && (
-                                        <InputError>{kcSanitize(messagesPerField.getFirstError("username", "password"))}</InputError>
+                                        <Errors>{kcSanitize(messagesPerField.getFirstError("username", "password"))}</Errors>
                                     )}
                                 </div>
                             </div>

@@ -5,7 +5,7 @@ import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
 import { Label } from "@/components/ui/label.tsx";
 import { PasswordInput } from "@/components/password-input.tsx";
-import InputError from "@/components/input-error.tsx";
+import Errors from "@/components/errors.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { Checkbox } from "@/components/ui/checkbox.tsx";
 
@@ -43,11 +43,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                             autoComplete="new-password"
                             aria-invalid={messagesPerField.existsError("password", "password-confirm")}
                         />
-                        {messagesPerField.existsError("password") && (
-                            <InputError>
-                                {kcSanitize(messagesPerField.get("password"))}
-                            </InputError>
-                        )}
+                        {messagesPerField.existsError("password") && <Errors>{kcSanitize(messagesPerField.get("password"))}</Errors>}
                     </div>
                 </div>
 
@@ -64,9 +60,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                             aria-invalid={messagesPerField.existsError("password", "password-confirm")}
                         />
                         {messagesPerField.existsError("password-confirm") && (
-                            <InputError>
-                                {kcSanitize(messagesPerField.get("password-confirm"))}
-                            </InputError>
+                            <Errors>{kcSanitize(messagesPerField.get("password-confirm"))}</Errors>
                         )}
                     </div>
                 </div>
@@ -74,7 +68,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                 <div className="flex flex-col gap-6">
                     <div id="kc-form-options" className={kcClsx("kcFormOptionsClass")}>
                         <div className="flex items-center space-x-3">
-                            <Checkbox id="logout-sessions" name="logout-sessions" value="on" defaultChecked={true}/>
+                            <Checkbox id="logout-sessions" name="logout-sessions" value="on" defaultChecked={true} />
                             <Label htmlFor="logout-sessions">{msg("logoutOtherSessions")}</Label>
                         </div>
                     </div>

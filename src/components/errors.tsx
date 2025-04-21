@@ -7,7 +7,7 @@ interface ErrorProps {
     asList?: boolean;
 }
 
-export default function InputError({ children, asList = false, className = '', ...props }: ErrorProps) {
+export default function Errors({ children, asList = false, className = '', ...props }: ErrorProps) {
     if (! children) {
         return null;
     }

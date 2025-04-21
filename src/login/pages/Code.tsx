@@ -3,7 +3,7 @@ import type { PageProps } from "keycloakify/login/pages/PageProps";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
 import { kcSanitize } from "keycloakify/lib/kcSanitize";
-import InputError from "@/components/input-error.tsx";
+import Errors from "@/components/errors.tsx";
 import { Input } from "@/components/ui/input.tsx";
 
 export default function Code(props: PageProps<Extract<KcContext, { pageId: "code.ftl" }>, I18n>) {
@@ -33,11 +33,7 @@ export default function Code(props: PageProps<Extract<KcContext, { pageId: "code
                         <Input id="code" readOnly={true} defaultValue={code.code} />
                     </>
                 ) : (
-                    code.error && (
-                        <InputError>
-                            {kcSanitize(code.error)}
-                        </InputError>
-                    )
+                    code.error && <Errors>{kcSanitize(code.error)}</Errors>
                 )}
             </div>
         </Template>

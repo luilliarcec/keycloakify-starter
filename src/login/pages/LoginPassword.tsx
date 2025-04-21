@@ -5,7 +5,7 @@ import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
 import { Label } from "@/components/ui/label.tsx";
 import TextLink from "@/components/text-link.tsx";
-import InputError from "@/components/input-error.tsx";
+import Errors from "@/components/errors.tsx";
 import { Button } from "@/components/ui/button.tsx";
 import { PasswordInput } from "@/components/password-input.tsx";
 
@@ -56,9 +56,7 @@ export default function LoginPassword(props: PageProps<Extract<KcContext, { page
                                     aria-invalid={messagesPerField.existsError("username", "password")}
                                 />
                                 {messagesPerField.existsError("password") && (
-                                    <InputError>
-                                        {kcSanitize(messagesPerField.getFirstError("password"))}
-                                    </InputError>
+                                    <Errors>{kcSanitize(messagesPerField.getFirstError("password"))}</Errors>
                                 )}
                             </div>
                         </div>

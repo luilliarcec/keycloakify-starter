@@ -326,12 +326,12 @@ export const WithMultivaluedInput: Story = {
                             values: ["js", "php"],
                             validators: {
                                 options: {
-                                    options: ["js", "php", "python"],
-                                },
+                                    options: ["js", "php", "python"]
+                                }
                             },
                             annotations: {
-                                inputType: "input",
-                            },
+                                inputType: "input"
+                            }
                         }
                     }
                 }

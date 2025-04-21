@@ -50,7 +50,7 @@ export default function UpdateEmail(props: UpdateEmailProps) {
 
                 <div id="kc-form-options" className={kcClsx("kcFormOptionsClass")}>
                     <div className="flex items-center space-x-3">
-                        <Checkbox id="logout-sessions" name="logout-sessions" value="on" defaultChecked={true}/>
+                        <Checkbox id="logout-sessions" name="logout-sessions" value="on" defaultChecked={true} />
                         <Label htmlFor="logout-sessions">{msg("logoutOtherSessions")}</Label>
                     </div>
                 </div>

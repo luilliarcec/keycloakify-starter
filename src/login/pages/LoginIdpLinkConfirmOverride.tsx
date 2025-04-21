@@ -37,13 +37,7 @@ export default function LoginIdpLinkConfirmOverride(
                     </TextLink>
                 </div>
 
-                <Button
-                    type="submit"
-                    className="w-full"
-                    name="submitAction"
-                    id="confirmOverride"
-                    value="confirmOverride"
-                >
+                <Button type="submit" className="w-full" name="submitAction" id="confirmOverride" value="confirmOverride">
                     {msg("confirmOverrideIdpContinue", idpDisplayName)}
                 </Button>
             </form>

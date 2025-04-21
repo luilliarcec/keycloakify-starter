@@ -1,4 +1,4 @@
-import InputError from "@/components/input-error.tsx";
+import Errors from "@/components/errors.tsx";
 import { FormInputErrorsProps } from "@/utils/types.ts";
 import { cn } from "@/lib/utils.ts";
 
@@ -22,9 +22,9 @@ export default function FormErrors(props: FormInputErrorsProps & { className?: s
             {displayableErrors
                 .filter(error => error.fieldIndex === fieldIndex)
                 .map(({ errorMessageStr }, i) => (
-                    <InputError key={i} asList>
+                    <Errors key={i} asList>
                         {errorMessageStr}
-                    </InputError>
+                    </Errors>
                 ))}
         </ul>
     );

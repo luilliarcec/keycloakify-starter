@@ -41,9 +41,7 @@ export default function LoginOauthGrant(
             }
         >
             <div id="kc-oauth" className="flex flex-col gap-6">
-                <h3 className="font-semibold">
-                    {msg("oauthGrantRequest")}
-                </h3>
+                <h3 className="font-semibold">{msg("oauthGrantRequest")}</h3>
 
                 {oauth.clientScopesRequested.length > 0 && (
                     <ul className="font-semibold">

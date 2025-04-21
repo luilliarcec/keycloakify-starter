@@ -7,7 +7,7 @@ import type { I18n } from "../i18n";
 import { Button } from "@/components/ui/button.tsx";
 import { InputOTP, InputOTPGroup, InputOTPSeparator, InputOTPSlot } from "@/components/ui/input-otp.tsx";
 import { Label } from "@/components/ui/label.tsx";
-import InputError from "@/components/input-error.tsx";
+import Errors from "@/components/errors.tsx";
 import { Select, SelectContent, SelectGroup, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 
 export default function LoginOtp(props: PageProps<Extract<KcContext, { pageId: "login-otp.ftl" }>, I18n>) {
@@ -46,9 +46,7 @@ export default function LoginOtp(props: PageProps<Extract<KcContext, { pageId: "
                 {otpLogin.userOtpCredentials.length > 1 && (
                     <div className="flex flex-col">
                         <div className="grid gap-2">
-                            <Label htmlFor="selectedCredentialId">
-                                {msg("loginTotpDeviceName")}
-                            </Label>
+                            <Label htmlFor="selectedCredentialId">{msg("loginTotpDeviceName")}</Label>
 
                             <Select name="selectedCredentialId" defaultValue={otpLogin.selectedCredentialId}>
                                 <SelectTrigger className="w-full">
@@ -84,7 +82,7 @@ export default function LoginOtp(props: PageProps<Extract<KcContext, { pageId: "
                                 <InputOTPSlot index={5} />
                             </InputOTPGroup>
                         </InputOTP>
-                        {messagesPerField.existsError("totp") && <InputError>{kcSanitize(messagesPerField.get("totp"))}</InputError>}
+                        {messagesPerField.existsError("totp") && <Errors>{kcSanitize(messagesPerField.get("totp"))}</Errors>}
                     </div>
                 </div>
 

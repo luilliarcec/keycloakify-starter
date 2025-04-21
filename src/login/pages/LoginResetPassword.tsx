@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button.tsx";
 import TextLink from "@/components/text-link.tsx";
 import { Label } from "@/components/ui/label.tsx";
 import { Input } from "@/components/ui/input.tsx";
-import InputError from "@/components/input-error.tsx";
+import Errors from "@/components/errors.tsx";
 
 export default function LoginResetPassword(
     props: PageProps<
@@ -60,7 +60,7 @@ export default function LoginResetPassword(
                             autoComplete="username"
                             aria-invalid={messagesPerField.existsError("username")}
                         />
-                        {messagesPerField.existsError("username") && <InputError>{kcSanitize(messagesPerField.get("username"))}</InputError>}
+                        {messagesPerField.existsError("username") && <Errors>{kcSanitize(messagesPerField.get("username"))}</Errors>}
                     </div>
                 </div>
 

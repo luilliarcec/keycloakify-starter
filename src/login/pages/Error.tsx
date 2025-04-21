@@ -3,7 +3,7 @@ import { kcSanitize } from "keycloakify/lib/kcSanitize";
 import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
 import TextLink from "@/components/text-link.tsx";
-import InputError from "@/components/input-error.tsx";
+import Errors from "@/components/errors.tsx";
 
 export default function Error(props: PageProps<Extract<KcContext, { pageId: "error.ftl" }>, I18n>) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
@@ -22,9 +22,7 @@ export default function Error(props: PageProps<Extract<KcContext, { pageId: "err
             headerNode={msg("errorTitle")}
         >
             <div className="flex flex-col gap-6 text-muted-foreground text-center">
-                <InputError>
-                    {kcSanitize(message.summary)}
-                </InputError>
+                <Errors>{kcSanitize(message.summary)}</Errors>
 
                 {!skipLink && client !== undefined && client.baseUrl !== undefined && (
                     <TextLink id="backToApplication" href={client.baseUrl} tabIndex={8}>

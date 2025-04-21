@@ -161,13 +161,7 @@ export default function LoginPasskeysConditionalAuthenticate(
                             </form>
                         )}
                         <div id="kc-form-passkey-button" className={kcClsx("kcFormButtonsClass")} style={{ display: "none" }}>
-                            <Button
-                                id={authButtonId}
-                                type="button"
-                                autoFocus
-                                value={msgStr("passkey-doAuthenticate")}
-                                className="w-full"
-                            >
+                            <Button id={authButtonId} type="button" autoFocus value={msgStr("passkey-doAuthenticate")} className="w-full">
                                 {msgStr("passkey-doAuthenticate")}
                             </Button>
                         </div>

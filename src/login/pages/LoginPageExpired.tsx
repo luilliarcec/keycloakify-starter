@@ -15,7 +15,6 @@ export default function LoginPageExpired(props: PageProps<Extract<KcContext, { p
             <div className="flex flex-col gap-6">
                 <p id="instruction0">
                     <span>{msg("pageExpiredMsg1")} </span>
-
                     <TextLink id="loginRestartLink" href={url.loginRestartFlowUrl}>
                         {msg("doClickHere")}
                     </TextLink>{" "}
@@ -23,7 +22,6 @@ export default function LoginPageExpired(props: PageProps<Extract<KcContext, { p
 
                 <p id="instruction1">
                     <span>{msg("pageExpiredMsg2")} </span>
-
                     <TextLink id="loginContinueLink" href={url.loginAction}>
                         {msg("doClickHere")}
                     </TextLink>{" "}

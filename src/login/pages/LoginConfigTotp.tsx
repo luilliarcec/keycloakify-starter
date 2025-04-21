@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button.tsx";
 import { Checkbox } from "@/components/ui/checkbox.tsx";
 import { Label } from "@/components/ui/label.tsx";
 import { Input } from "@/components/ui/input.tsx";
-import InputError from "@/components/input-error.tsx";
+import Errors from "@/components/errors.tsx";
 import TextLink from "@/components/text-link.tsx";
 
 export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pageId: "login-config-totp.ftl" }>, I18n>) {
@@ -114,7 +114,7 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
                                 {msg("authenticatorCode")} <span className="required">*</span>
                             </Label>
                             <Input type="text" id="totp" name="totp" autoComplete="off" aria-invalid={messagesPerField.existsError("userLabel")} />
-                            {messagesPerField.existsError("totp") && <InputError>{kcSanitize(messagesPerField.get("totp"))}</InputError>}
+                            {messagesPerField.existsError("totp") && <Errors>{kcSanitize(messagesPerField.get("totp"))}</Errors>}
                         </div>
                         <input type="hidden" id="totpSecret" name="totpSecret" value={totp.totpSecret} />
                         {mode && <input type="hidden" id="mode" value={mode} />}
@@ -132,7 +132,7 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
                                 autoComplete="off"
                                 aria-invalid={messagesPerField.existsError("userLabel")}
                             />
-                            {messagesPerField.existsError("userLabel") && <InputError>{kcSanitize(messagesPerField.get("userLabel"))}</InputError>}
+                            {messagesPerField.existsError("userLabel") && <Errors>{kcSanitize(messagesPerField.get("userLabel"))}</Errors>}
                         </div>
                     </div>
 

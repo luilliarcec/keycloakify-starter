@@ -33,9 +33,7 @@ export default function LoginResetOtp(props: PageProps<Extract<KcContext, { page
                 {configuredOtpCredentials.userOtpCredentials.length > 0 && (
                     <div className="flex flex-col">
                         <div className="grid gap-2">
-                            <Label htmlFor="selectedCredentialId">
-                                {msg("loginTotpDeviceName")}
-                            </Label>
+                            <Label htmlFor="selectedCredentialId">{msg("loginTotpDeviceName")}</Label>
 
                             <Select name="selectedCredentialId" defaultValue={configuredOtpCredentials.selectedCredentialId}>
                                 <SelectTrigger className="w-full">

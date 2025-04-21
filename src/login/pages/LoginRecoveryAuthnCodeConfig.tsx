@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label.tsx";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert.tsx";
 import { AlertTriangle } from "lucide-react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPrint, faDownload, faCopy } from "@fortawesome/free-solid-svg-icons"
+import { faPrint, faDownload, faCopy } from "@fortawesome/free-solid-svg-icons";
 import { cn } from "@/lib/utils.ts";
 
 export default function LoginRecoveryAuthnCodeConfig(props: PageProps<Extract<KcContext, { pageId: "login-recovery-authn-code-config.ftl" }>, I18n>) {
@@ -26,7 +26,8 @@ export default function LoginRecoveryAuthnCodeConfig(props: PageProps<Extract<Kc
 
     const olRecoveryCodesListId = "kc-recovery-codes-list";
 
-    const actionBtnCssClasses = "text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500 cursor-pointer";
+    const actionBtnCssClasses =
+        "text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500 cursor-pointer";
 
     useScript({ olRecoveryCodesListId, i18n });
 
@@ -41,9 +42,7 @@ export default function LoginRecoveryAuthnCodeConfig(props: PageProps<Extract<Kc
             <div className="flex flex-col gap-6 text-muted-foreground">
                 <Alert variant="warning">
                     <AlertTriangle />
-                    <AlertTitle className="line-clamp-none">
-                        {msg("recovery-code-config-warning-title")}
-                    </AlertTitle>
+                    <AlertTitle className="line-clamp-none">{msg("recovery-code-config-warning-title")}</AlertTitle>
                     <AlertDescription>
                         <p>{msg("recovery-code-config-warning-message")}</p>
                     </AlertDescription>
@@ -52,7 +51,9 @@ export default function LoginRecoveryAuthnCodeConfig(props: PageProps<Extract<Kc
                 <ol id={olRecoveryCodesListId} className="w-full grid grid-cols-1 sm:grid-cols-2 gap-2 text-base text-black my-4">
                     {recoveryAuthnCodesConfigBean.generatedRecoveryAuthnCodesList.map((code, index) => (
                         <li key={index}>
-                            <span>{code.slice(0, 4)}-{code.slice(4, 8)}-{code.slice(8)}</span>
+                            <span>
+                                {code.slice(0, 4)}-{code.slice(4, 8)}-{code.slice(8)}
+                            </span>
                         </li>
                     ))}
                 </ol>
@@ -88,7 +89,11 @@ export default function LoginRecoveryAuthnCodeConfig(props: PageProps<Extract<Kc
                 </div>
 
                 <form action={kcContext.url.loginAction} className="flex flex-col gap-6" id="kc-recovery-codes-settings-form" method="post">
-                    <input type="hidden" name="generatedRecoveryAuthnCodes" value={recoveryAuthnCodesConfigBean.generatedRecoveryAuthnCodesAsString} />
+                    <input
+                        type="hidden"
+                        name="generatedRecoveryAuthnCodes"
+                        value={recoveryAuthnCodesConfigBean.generatedRecoveryAuthnCodesAsString}
+                    />
                     <input type="hidden" name="generatedAt" value={recoveryAuthnCodesConfigBean.generatedAt} />
                     <input type="hidden" id="userLabel" name="userLabel" value={msgStr("recovery-codes-label-default")} />
 
@@ -115,7 +120,13 @@ export default function LoginRecoveryAuthnCodeConfig(props: PageProps<Extract<Kc
                             </Button>
                         </>
                     ) : (
-                        <Button type="submit" className="w-full" id="saveRecoveryAuthnCodesBtn" value={msgStr("recovery-codes-action-complete")} disabled>
+                        <Button
+                            type="submit"
+                            className="w-full"
+                            id="saveRecoveryAuthnCodesBtn"
+                            value={msgStr("recovery-codes-action-complete")}
+                            disabled
+                        >
                             {msgStr("recovery-codes-action-complete")}
                         </Button>
                     )}

@@ -11,7 +11,7 @@ import { Button } from "@/components/ui/button";
 import TextLink from "@/components/text-link";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import InputError from "@/components/input-error.tsx";
+import Errors from "@/components/errors.tsx";
 
 type RegisterProps = PageProps<Extract<KcContext, { pageId: "register.ftl" }>, I18n> & {
     UserProfileFormFields: LazyOrNot<(props: UserProfileFormFieldsProps) => JSX.Element>;
@@ -121,9 +121,7 @@ function TermsAcceptance(props: {
         <>
             <div className="form-group">
                 <div className="flex flex-col space-y-1 text-sm">
-                    <div className="text-gray-500 dark:text-gray-400">
-                        {msg("termsTitle")}
-                    </div>
+                    <div className="text-gray-500 dark:text-gray-400">{msg("termsTitle")}</div>
                     <div
                         id="kc-registration-terms-text"
                         className="text-foreground underline decoration-neutral-300 underline-offset-4 transition-colors duration-300 ease-out hover:decoration-current! dark:decoration-neutral-500"
@@ -144,11 +142,7 @@ function TermsAcceptance(props: {
                     />
                     <Label htmlFor="termsAccepted">{msg("acceptTerms")}</Label>
                 </div>
-                {messagesPerField.existsError("termsAccepted") && (
-                    <InputError>
-                        {kcSanitize(messagesPerField.get("termsAccepted"))}
-                    </InputError>
-                )}
+                {messagesPerField.existsError("termsAccepted") && <Errors>{kcSanitize(messagesPerField.get("termsAccepted"))}</Errors>}
             </div>
         </>
     );

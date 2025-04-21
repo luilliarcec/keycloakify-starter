@@ -52,12 +52,7 @@ export default function IdpReviewUserProfile(props: IdpReviewUserProfileProps) {
                     </div>
 
                     <div id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
-                        <Button
-                            className="w-full"
-                            type="submit"
-                            value={msgStr("doSubmit")}
-                            disabled={!isFomSubmittable}
-                        >
+                        <Button className="w-full" type="submit" value={msgStr("doSubmit")} disabled={!isFomSubmittable}>
                             {msgStr("doSubmit")}
                         </Button>
                     </div>

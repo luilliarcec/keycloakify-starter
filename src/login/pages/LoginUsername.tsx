@@ -8,7 +8,7 @@ import { kcSanitize } from "keycloakify/lib/kcSanitize";
 import SocialProvidersButtons from "@/components/social-providers-buttons.tsx";
 import { Label } from "@/components/ui/label.tsx";
 import { Input } from "@/components/ui/input.tsx";
-import InputError from "@/components/input-error.tsx";
+import Errors from "@/components/errors.tsx";
 import { Checkbox } from "@/components/ui/checkbox.tsx";
 
 export default function LoginUsername(props: PageProps<Extract<KcContext, { pageId: "login-username.ftl" }>, I18n>) {
@@ -37,9 +37,7 @@ export default function LoginUsername(props: PageProps<Extract<KcContext, { page
                 </div>
             }
             headerNode={msg("loginAccountTitle")}
-            socialProvidersNode={
-                <SocialProvidersButtons social={social} i18n={i18n} realm={realm}></SocialProvidersButtons>
-            }
+            socialProvidersNode={<SocialProvidersButtons social={social} i18n={i18n} realm={realm}></SocialProvidersButtons>}
         >
             <div id="kc-form">
                 <div id="kc-form-wrapper">
@@ -60,8 +58,8 @@ export default function LoginUsername(props: PageProps<Extract<KcContext, { page
                                             {!realm.loginWithEmailAllowed
                                                 ? msg("username")
                                                 : !realm.registrationEmailAsUsername
-                                                    ? msg("usernameOrEmail")
-                                                    : msg("email")}
+                                                  ? msg("usernameOrEmail")
+                                                  : msg("email")}
                                         </Label>
                                         <Input
                                             id="username"
@@ -74,9 +72,7 @@ export default function LoginUsername(props: PageProps<Extract<KcContext, { page
                                             aria-invalid={messagesPerField.existsError("username")}
                                         />
                                         {messagesPerField.existsError("username", "password") && (
-                                            <InputError>
-                                                {kcSanitize(messagesPerField.getFirstError("username", "password"))}
-                                            </InputError>
+                                            <Errors>{kcSanitize(messagesPerField.getFirstError("username", "password"))}</Errors>
                                         )}
                                     </div>
                                 </div>
