@@ -12,7 +12,7 @@ export default function InputError({ children, asList = false, className = '', .
         return null;
     }
 
-    const baseClassName = "text-sm text-red-600 dark:text-red-400";
+    const baseClassName = "input-error text-sm text-red-600 dark:text-red-400";
 
     if (asList) {
         return (
