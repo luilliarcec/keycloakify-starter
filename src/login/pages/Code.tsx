@@ -26,10 +26,10 @@ export default function Code(props: PageProps<Extract<KcContext, { pageId: "code
             classes={classes}
             headerNode={code.success ? msg("codeSuccessTitle") : msg("codeErrorTitle", code.error)}
         >
-            <div id="kc-code">
+            <div id="kc-code" className="flex flex-col gap-6">
                 {code.success ? (
                     <>
-                        <p className="text-sm mb-4">{msg("copyCodeInstruction")}</p>
+                        <p>{msg("copyCodeInstruction")}</p>
                         <Input id="code" readOnly={true} defaultValue={code.code} />
                     </>
                 ) : (

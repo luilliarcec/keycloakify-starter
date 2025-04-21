@@ -19,16 +19,17 @@ export default function Terms(props: PageProps<Extract<KcContext, { pageId: "ter
             displayMessage={false}
             headerNode={msg("termsTitle")}
         >
-            <div id="kc-terms-text">{msg("termsText")}</div>
-            <form className="form-actions flex flex-col space-y-2 mt-4" action={url.loginAction} method="POST">
-                <Button id="kc-accept" type="submit" className="w-full" name="accept">
-                    {msgStr("doAccept")}
-                </Button>
-                <Button id="kc-decline" variant="outline" type="submit" className="w-full" name="cancel">
-                    {msgStr("doDecline")}
-                </Button>
-            </form>
-            <div className="clearfix" />
+            <div className="flex flex-col gap-6">
+                <div id="kc-terms-text">{msg("termsText")}</div>
+                <form className="form-actions flex flex-col space-y-2" action={url.loginAction} method="POST">
+                    <Button id="kc-accept" type="submit" className="w-full" name="accept">
+                        {msgStr("doAccept")}
+                    </Button>
+                    <Button id="kc-decline" variant="outline" type="submit" className="w-full" name="cancel">
+                        {msgStr("doDecline")}
+                    </Button>
+                </form>
+            </div>
         </Template>
     );
 }

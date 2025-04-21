@@ -54,7 +54,7 @@ export default function LoginUsername(props: PageProps<Extract<KcContext, { page
                             method="post"
                         >
                             {!usernameHidden && (
-                                <div className="flex flex-col gap-6">
+                                <div className="flex flex-col">
                                     <div className="grid gap-2">
                                         <Label htmlFor="username">
                                             {!realm.loginWithEmailAllowed

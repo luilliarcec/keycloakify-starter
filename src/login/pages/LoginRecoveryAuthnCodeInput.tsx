@@ -29,8 +29,8 @@ export default function LoginRecoveryAuthnCodeInput(props: PageProps<Extract<KcC
             headerNode={msg("auth-recovery-code-header")}
             displayMessage={!messagesPerField.existsError("recoveryCodeInput")}
         >
-            <form id="kc-recovery-code-login-form" className="flex flex-col gap-6 text-sm" action={url.loginAction} method="post">
-                <div className="flex flex-col gap-6">
+            <form id="kc-recovery-code-login-form" className="flex flex-col gap-6" action={url.loginAction} method="post">
+                <div className="flex flex-col">
                     <div className="grid gap-2">
                         <Label htmlFor="recoveryCodeInput">
                             {msg("auth-recovery-code-prompt", `${recoveryAuthnCodesInputBean.codeNumber}`)}

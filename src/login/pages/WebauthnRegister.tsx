@@ -1,4 +1,4 @@
-import { getKcClsx, type KcClsx } from "keycloakify/login/lib/kcClsx";
+import { getKcClsx } from "keycloakify/login/lib/kcClsx";
 import { useScript } from "keycloakify/login/pages/WebauthnRegister.useScript";
 import type { PageProps } from "keycloakify/login/pages/PageProps";
 import type { KcContext } from "../KcContext";
@@ -7,7 +7,17 @@ import { Button } from "@/components/ui/button.tsx";
 import { Checkbox } from "@/components/ui/checkbox.tsx";
 import { Label } from "@/components/ui/label.tsx";
 
-export default function WebauthnRegister(props: PageProps<Extract<KcContext, { pageId: "webauthn-register.ftl" }>, I18n>) {
+export default function WebauthnRegister(
+    props: PageProps<
+        Extract<
+            KcContext,
+            {
+                pageId: "webauthn-register.ftl";
+            }
+        >,
+        I18n
+    >
+) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
 
     const { kcClsx } = getKcClsx({ doUseDefaultCss, classes });
@@ -40,33 +50,26 @@ export default function WebauthnRegister(props: PageProps<Extract<KcContext, { p
                     <input type="hidden" id="authenticatorLabel" name="authenticatorLabel" />
                     <input type="hidden" id="transports" name="transports" />
                     <input type="hidden" id="error" name="error" />
-                    <LogoutOtherSessions kcClsx={kcClsx} i18n={i18n} />
+                    <div id="kc-form-options" className="flex items-center space-x-3 mb-4">
+                        <Checkbox id="logout-sessions" name="logout-sessions" value="on" defaultChecked={true} />
+                        <Label htmlFor="logout-sessions">{msg("logoutOtherSessions")}</Label>
+                    </div>
                 </div>
             </form>
-            <Button id={authButtonId} type="submit" className="w-full">
-                {msgStr("doRegisterSecurityKey")}
-            </Button>
 
-            {!isSetRetry && isAppInitiatedAction && (
-                <form action={url.loginAction} className="mt-2" id="kc-webauthn-settings-form" method="post">
-                    <Button id="cancelWebAuthnAIA" variant="outline" type="submit" className="w-full" name="cancel-aia">
-                        {msgStr("doCancel")}
-                    </Button>
-                </form>
-            )}
+            <div className="flex flex-col space-y-2">
+                <Button id={authButtonId} type="submit" className="w-full">
+                    {msgStr("doRegisterSecurityKey")}
+                </Button>
+
+                {!isSetRetry && isAppInitiatedAction && (
+                    <form action={url.loginAction} id="kc-webauthn-settings-form" method="post">
+                        <Button id="cancelWebAuthnAIA" variant="outline" type="submit" className="w-full" name="cancel-aia">
+                            {msgStr("doCancel")}
+                        </Button>
+                    </form>
+                )}
+            </div>
         </Template>
-    );
-}
-
-function LogoutOtherSessions(props: { kcClsx: KcClsx; i18n: I18n }) {
-    const { i18n } = props;
-
-    const { msg } = i18n;
-
-    return (
-        <div id="kc-form-options" className="flex items-center space-x-3 mb-4">
-            <Checkbox id="logout-sessions" name="logout-sessions" value="on" defaultChecked={true} />
-            <Label htmlFor="logout-sessions">{msg("logoutOtherSessions")}</Label>
-        </div>
     );
 }

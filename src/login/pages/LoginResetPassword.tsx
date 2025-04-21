@@ -8,7 +8,17 @@ import { Label } from "@/components/ui/label.tsx";
 import { Input } from "@/components/ui/input.tsx";
 import InputError from "@/components/input-error.tsx";
 
-export default function LoginResetPassword(props: PageProps<Extract<KcContext, { pageId: "login-reset-password.ftl" }>, I18n>) {
+export default function LoginResetPassword(
+    props: PageProps<
+        Extract<
+            KcContext,
+            {
+                pageId: "login-reset-password.ftl";
+            }
+        >,
+        I18n
+    >
+) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
 
     const { url, realm, auth, messagesPerField } = kcContext;
@@ -31,14 +41,14 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
             headerNode={msg("emailForgotTitle")}
         >
             <form id="kc-reset-password-form" className="flex flex-col gap-6" action={url.loginAction} method="post">
-                <div className="flex flex-col gap-6">
+                <div className="flex flex-col">
                     <div className="grid gap-2">
                         <Label htmlFor="username">
                             {!realm.loginWithEmailAllowed
                                 ? msg("username")
                                 : !realm.registrationEmailAsUsername
-                                    ? msg("usernameOrEmail")
-                                    : msg("email")}
+                                  ? msg("usernameOrEmail")
+                                  : msg("email")}
                         </Label>
                         <Input
                             id="username"
@@ -50,15 +60,11 @@ export default function LoginResetPassword(props: PageProps<Extract<KcContext, {
                             autoComplete="username"
                             aria-invalid={messagesPerField.existsError("username")}
                         />
-                        {messagesPerField.existsError("username") && (
-                            <InputError>
-                                {kcSanitize(messagesPerField.get("username"))}
-                            </InputError>
-                        )}
+                        {messagesPerField.existsError("username") && <InputError>{kcSanitize(messagesPerField.get("username"))}</InputError>}
                     </div>
                 </div>
 
-                <div className="flex flex-col space-y-3">
+                <div className="flex flex-col space-y-2">
                     <div className="text-muted-foreground text-sm">
                         <TextLink href={url.loginUrl}>{msg("backToLogin")}</TextLink>
                     </div>

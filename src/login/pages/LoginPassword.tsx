@@ -38,7 +38,7 @@ export default function LoginPassword(props: PageProps<Extract<KcContext, { page
                         action={url.loginAction}
                         method="post"
                     >
-                        <div className="flex flex-col gap-6">
+                        <div className="flex flex-col">
                             <div className="grid gap-2">
                                 <div className="flex items-center">
                                     <Label htmlFor="password">{msg("password")}</Label>

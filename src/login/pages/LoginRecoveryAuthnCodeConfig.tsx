@@ -38,7 +38,7 @@ export default function LoginRecoveryAuthnCodeConfig(props: PageProps<Extract<Kc
             classes={classes}
             headerNode={msg("recovery-code-config-header")}
         >
-            <div className="flex flex-col gap-6 text-sm text-muted-foreground">
+            <div className="flex flex-col gap-6 text-muted-foreground">
                 <Alert variant="warning">
                     <AlertTriangle />
                     <AlertTitle className="line-clamp-none">
@@ -49,7 +49,7 @@ export default function LoginRecoveryAuthnCodeConfig(props: PageProps<Extract<Kc
                     </AlertDescription>
                 </Alert>
 
-                <ol id={olRecoveryCodesListId} className="w-full grid grid-cols-1 sm:grid-cols-2 gap-2 text-normal text-black my-4">
+                <ol id={olRecoveryCodesListId} className="w-full grid grid-cols-1 sm:grid-cols-2 gap-2 text-base text-black my-4">
                     {recoveryAuthnCodesConfigBean.generatedRecoveryAuthnCodesList.map((code, index) => (
                         <li key={index}>
                             <span>{code.slice(0, 4)}-{code.slice(4, 8)}-{code.slice(8)}</span>
@@ -76,9 +76,9 @@ export default function LoginRecoveryAuthnCodeConfig(props: PageProps<Extract<Kc
                         <Checkbox
                             id="kcRecoveryCodesConfirmationCheck"
                             name="kcRecoveryCodesConfirmationCheck"
-                            onChange={event => {
+                            onCheckedChange={checked => {
                                 //@ts-expect-error: This is inherited from the original code
-                                document.getElementById("saveRecoveryAuthnCodesBtn").disabled = !event.target.checked;
+                                document.getElementById("saveRecoveryAuthnCodesBtn").disabled = !checked;
                             }}
                         />
                         <Label htmlFor="kcRecoveryCodesConfirmationCheck" className="text-black">

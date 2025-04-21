@@ -35,7 +35,7 @@ export default function LoginOtp(props: PageProps<Extract<KcContext, { pageId: "
         >
             <form
                 id="kc-otp-login-form"
-                className={kcClsx("kcFormClass")}
+                className="flex flex-col gap-6"
                 action={url.loginAction}
                 onSubmit={() => {
                     setIsSubmitting(true);
@@ -44,8 +44,12 @@ export default function LoginOtp(props: PageProps<Extract<KcContext, { pageId: "
                 method="post"
             >
                 {otpLogin.userOtpCredentials.length > 1 && (
-                    <div className="mb-5">
-                        <div className={kcClsx("kcInputWrapperClass")}>
+                    <div className="flex flex-col">
+                        <div className="grid gap-2">
+                            <Label htmlFor="selectedCredentialId">
+                                {msg("loginTotpDeviceName")}
+                            </Label>
+
                             <Select name="selectedCredentialId" defaultValue={otpLogin.selectedCredentialId}>
                                 <SelectTrigger className="w-full">
                                     <SelectValue placeholder="" />
@@ -64,8 +68,8 @@ export default function LoginOtp(props: PageProps<Extract<KcContext, { pageId: "
                     </div>
                 )}
 
-                <div className="flex flex-col gap-6">
-                    <div className="grid gap-4 justify-items-center">
+                <div className="flex flex-col">
+                    <div className="grid gap-2 justify-items-center">
                         <Label htmlFor="otp">{msg("loginOtpOneTime")}</Label>
                         <InputOTP id="otp" name="otp" maxLength={6} autoComplete="off" autoFocus aria-invalid={messagesPerField.existsError("totp")}>
                             <InputOTPGroup>
@@ -84,7 +88,7 @@ export default function LoginOtp(props: PageProps<Extract<KcContext, { pageId: "
                     </div>
                 </div>
 
-                <div className="mt-10">
+                <div className="flex flex-col space-y-2">
                     <div id="kc-form-options" className={kcClsx("kcFormOptionsClass")}>
                         <div className={kcClsx("kcFormOptionsWrapperClass")}></div>
                     </div>

@@ -29,38 +29,33 @@ export default function WebauthnError(props: PageProps<Extract<KcContext, { page
                 <input type="hidden" id="executionValue" name="authenticationExecution" />
                 <input type="hidden" id="isSetRetry" name="isSetRetry" />
             </form>
-            <Button
-                tabIndex={4}
-                onClick={() => {
-                    // @ts-expect-error: Trusted Keycloak's code
-                    document.getElementById("isSetRetry").value = "retry";
-                    // @ts-expect-error: Trusted Keycloak's code
-                    document.getElementById("executionValue").value = "${execution}";
-                    // @ts-expect-error: Trusted Keycloak's code
-                    document.getElementById("kc-error-credential-form").submit();
-                }}
-                type="button"
-                className="w-full"
-                name="try-again"
-                id="kc-try-again"
-                value={msgStr("doTryAgain")}
-            >
-                {msgStr("doTryAgain")}
-            </Button>
-            {isAppInitiatedAction && (
-                <form action={url.loginAction} className={kcClsx("kcFormClass")} id="kc-webauthn-settings-form" method="post">
-                    <Button
-                        type="submit"
-                        variant="outline"
-                        className="w-full mt-2"
-                        id="cancelWebAuthnAIA"
-                        name="cancel-aia"
-                        value="true"
-                    >
-                        {msgStr("doCancel")}
-                    </Button>
-                </form>
-            )}
+            <div className="flex flex-col space-y-2">
+                <Button
+                    tabIndex={4}
+                    onClick={() => {
+                        // @ts-expect-error: Trusted Keycloak's code
+                        document.getElementById("isSetRetry").value = "retry";
+                        // @ts-expect-error: Trusted Keycloak's code
+                        document.getElementById("executionValue").value = "${execution}";
+                        // @ts-expect-error: Trusted Keycloak's code
+                        document.getElementById("kc-error-credential-form").submit();
+                    }}
+                    type="button"
+                    className="w-full"
+                    name="try-again"
+                    id="kc-try-again"
+                    value={msgStr("doTryAgain")}
+                >
+                    {msgStr("doTryAgain")}
+                </Button>
+                {isAppInitiatedAction && (
+                    <form action={url.loginAction} className={kcClsx("kcFormClass")} id="kc-webauthn-settings-form" method="post">
+                        <Button type="submit" variant="outline" className="w-full" id="cancelWebAuthnAIA" name="cancel-aia" value="true">
+                            {msgStr("doCancel")}
+                        </Button>
+                    </form>
+                )}
+            </div>
         </Template>
     );
 }

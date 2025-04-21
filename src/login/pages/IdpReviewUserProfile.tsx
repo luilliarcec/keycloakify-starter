@@ -46,10 +46,11 @@ export default function IdpReviewUserProfile(props: IdpReviewUserProfileProps) {
                     doMakeUserConfirmPassword={doMakeUserConfirmPassword}
                 />
 
-                <div className={kcClsx("kcFormGroupClass")}>
+                <div className="flex flex-col space-y-2">
                     <div id="kc-form-options" className={kcClsx("kcFormOptionsClass")}>
                         <div className={kcClsx("kcFormOptionsWrapperClass")} />
                     </div>
+
                     <div id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
                         <Button
                             className="w-full"

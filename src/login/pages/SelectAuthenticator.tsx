@@ -35,8 +35,8 @@ export default function SelectAuthenticator(
             displayInfo={false}
             headerNode={msg("loginChooseAuthenticator")}
         >
-            <form id="kc-select-credential-form" className={kcClsx("kcFormClass")} action={url.loginAction} method="post">
-                <div className="flex flex-col space-y-4">
+            <form id="kc-select-credential-form" className="flex flex-col gap-6" action={url.loginAction} method="post">
+                <div className="flex flex-col">
                     {auth.authenticationSelections.map((authenticationSelection, i) => (
                         <div key={i}>
                             <Separator />

@@ -40,25 +40,28 @@ export default function LoginOauthGrant(
                 </>
             }
         >
-            <div id="kc-oauth" className="content-area flex flex-col text-sm">
+            <div id="kc-oauth" className="flex flex-col gap-6">
                 <h3 className="font-semibold">
                     {msg("oauthGrantRequest")}
                 </h3>
-                <ul className="font-semibold">
-                    {oauth.clientScopesRequested.map(clientScope => (
-                        <li key={clientScope.consentScreenText}>
-                            <span>{advancedMsg(clientScope.consentScreenText)}</span>
-                            {clientScope.dynamicScopeParameter && (
-                                <>
-                                    :<span className="text-muted-foreground">{clientScope.dynamicScopeParameter}</span>
-                                </>
-                            )}
-                        </li>
-                    ))}
-                </ul>
+
+                {oauth.clientScopesRequested.length > 0 && (
+                    <ul className="font-semibold">
+                        {oauth.clientScopesRequested.map(clientScope => (
+                            <li key={clientScope.consentScreenText}>
+                                <span>{advancedMsg(clientScope.consentScreenText)}</span>
+                                {clientScope.dynamicScopeParameter && (
+                                    <>
+                                        :<span className="text-muted-foreground">{clientScope.dynamicScopeParameter}</span>
+                                    </>
+                                )}
+                            </li>
+                        ))}
+                    </ul>
+                )}
 
                 {(client.attributes.policyUri || client.attributes.tosUri) && (
-                    <div className="flex flex-col mt-5 text-sm">
+                    <div className="flex flex-col">
                         <h3 className="font-semibold">
                             {client.name ? msg("oauthGrantInformation", advancedMsgStr(client.name)) : msg("oauthGrantInformation", client.clientId)}
                         </h3>
@@ -85,14 +88,14 @@ export default function LoginOauthGrant(
                     </div>
                 )}
 
-                <form className="form-actions mt-5" action={url.oauthAction} method="POST">
+                <form className="form-actions" action={url.oauthAction} method="POST">
                     <input type="hidden" name="code" value={oauth.code} />
                     <div className={kcClsx("kcFormGroupClass")}>
                         <div id="kc-form-options">
                             <div className={kcClsx("kcFormOptionsWrapperClass")}></div>
                         </div>
 
-                        <div id="kc-form-buttons" className="flex flex-col space-y-2 mt-4">
+                        <div id="kc-form-buttons" className="flex flex-col space-y-2">
                             <Button id="kc-login" type="submit" className="w-full" name="accept">
                                 {msgStr("doYes")}
                             </Button>
@@ -102,7 +105,6 @@ export default function LoginOauthGrant(
                         </div>
                     </div>
                 </form>
-                <div className="clearfix"></div>
             </div>
         </Template>
     );

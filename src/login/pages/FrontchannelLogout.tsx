@@ -4,7 +4,17 @@ import type { KcContext } from "../KcContext";
 import type { I18n } from "../i18n";
 import { Button } from "@/components/ui/button.tsx";
 
-export default function FrontchannelLogout(props: PageProps<Extract<KcContext, { pageId: "frontchannel-logout.ftl" }>, I18n>) {
+export default function FrontchannelLogout(
+    props: PageProps<
+        Extract<
+            KcContext,
+            {
+                pageId: "frontchannel-logout.ftl";
+            }
+        >,
+        I18n
+    >
+) {
     const { kcContext, i18n, doUseDefaultCss, Template, classes } = props;
 
     const { logout } = kcContext;
@@ -26,20 +36,26 @@ export default function FrontchannelLogout(props: PageProps<Extract<KcContext, {
             documentTitle={msgStr("frontchannel-logout.title")}
             headerNode={msg("frontchannel-logout.title")}
         >
-            <p className="text-sm">{msg("frontchannel-logout.message")}</p>
-            <ul className="text-sm mt-2">
-                {logout.clients.map(client => (
-                    <li key={client.name}>
-                        {client.name}
-                        <iframe src={client.frontChannelLogoutUrl} style={{ display: "none" }} />
-                    </li>
-                ))}
-            </ul>
-            {logout.logoutRedirectUri && (
-                <Button asChild className="w-full mt-2">
-                    <a id="continue" href={logout.logoutRedirectUri}>{msg("doContinue")}</a>
-                </Button>
-            )}
+            <div className="flex flex-col gap-6">
+                <p>{msg("frontchannel-logout.message")}</p>
+
+                <ul className="text-sm">
+                    {logout.clients.map(client => (
+                        <li key={client.name}>
+                            {client.name}
+                            <iframe src={client.frontChannelLogoutUrl} style={{ display: "none" }} />
+                        </li>
+                    ))}
+                </ul>
+
+                {logout.logoutRedirectUri && (
+                    <Button asChild className="w-full">
+                        <a id="continue" href={logout.logoutRedirectUri}>
+                            {msg("doContinue")}
+                        </a>
+                    </Button>
+                )}
+            </div>
         </Template>
     );
 }

@@ -26,9 +26,8 @@ export default function Info(props: PageProps<Extract<KcContext, { pageId: "info
                 />
             }
         >
-            <div className="text-muted-foreground text-center text-sm">
+            <div className="flex flex-col gap-6 text-muted-foreground text-center">
                 <p
-                    className="mb-4"
                     dangerouslySetInnerHTML={{
                         __html: kcSanitize(
                             (() => {
@@ -59,6 +58,7 @@ export default function Info(props: PageProps<Extract<KcContext, { pageId: "info
                             </TextLink>
                         );
                     }
+
                     if (actionUri) {
                         return (
                             <TextLink id="backToApplication" href={actionUri}>

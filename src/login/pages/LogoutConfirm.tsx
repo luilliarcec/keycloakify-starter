@@ -19,11 +19,12 @@ export default function LogoutConfirm(props: PageProps<Extract<KcContext, { page
 
     return (
         <Template kcContext={kcContext} i18n={i18n} doUseDefaultCss={doUseDefaultCss} classes={classes} headerNode={msg("logoutConfirmTitle")}>
-            <div id="kc-logout-confirm" className="content-area">
-                <p className="instruction text-sm">{msg("logoutConfirmHeader")}</p>
-                <form className="form-actions mt-4" action={url.logoutConfirmAction} method="POST">
+            <div id="kc-logout-confirm" className="flex flex-col gap-6">
+                <p>{msg("logoutConfirmHeader")}</p>
+
+                <form className="form-actions" action={url.logoutConfirmAction} method="POST">
                     <input type="hidden" name="session_code" value={logoutConfirm.code} />
-                    <div className={kcClsx("kcFormGroupClass")}>
+                    <div className="flex flex-col space-y-2">
                         <div id="kc-form-options">
                             <div className={kcClsx("kcFormOptionsWrapperClass")}></div>
                         </div>
@@ -39,15 +40,15 @@ export default function LogoutConfirm(props: PageProps<Extract<KcContext, { page
                                 {msgStr("doLogout")}
                             </Button>
                         </div>
+                        <div id="kc-info-message">
+                            {!logoutConfirm.skipLink && client.baseUrl && (
+                                <p>
+                                    <TextLink className="text-sm" href={client.baseUrl}>{msg("backToApplication")}</TextLink>
+                                </p>
+                            )}
+                        </div>
                     </div>
                 </form>
-                <div id="kc-info-message">
-                    {!logoutConfirm.skipLink && client.baseUrl && (
-                        <p>
-                            <TextLink className="text-sm" href={client.baseUrl}>{msg("backToApplication")}</TextLink>
-                        </p>
-                    )}
-                </div>
             </div>
         </Template>
     );

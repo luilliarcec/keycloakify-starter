@@ -31,12 +31,12 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
             headerNode={msg("loginTotpTitle")}
             displayMessage={!messagesPerField.existsError("totp", "userLabel")}
         >
-            <>
-                <ol id="kc-totp-settings" className="flex flex-col text-sm text-muted-foreground list-decimal gap-4">
+            <div className="flex flex-col">
+                <ol id="kc-totp-settings" className="flex flex-col text-muted-foreground list-decimal space-y-4 px-4">
                     <li>
                         <p>{msg("loginTotpStep1")}</p>
 
-                        <ul id="kc-totp-supported-apps">
+                        <ul id="kc-totp-supported-apps" className="list-disc list-inside">
                             {totp.supportedApplications.map(app => (
                                 <li key={app}>{advancedMsg(app)}</li>
                             ))}
@@ -48,7 +48,7 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
                             <li>
                                 <p>{msg("loginTotpManualStep2")}</p>
                                 <p className="my-3 text-center">
-                                    <span id="kc-totp-secret-key" className="font-semibold text-normal text-black">
+                                    <span id="kc-totp-secret-key" className="font-semibold text-base text-black">
                                         {totp.totpSecretEncoded}
                                     </span>
                                 </p>
@@ -60,7 +60,7 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
                             </li>
                             <li>
                                 <p>{msg("loginTotpManualStep3")}</p>
-                                <ul className="text-black">
+                                <ul className="text-black mt-2">
                                     <li id="kc-totp-type" className="w-full">
                                         {msg("loginTotpType")}: <span className="font-semibold">{msg(`loginTotp.${totp.policy.type}`)}</span>
                                     </li>
@@ -85,12 +85,14 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
                     ) : (
                         <li>
                             <p>{msg("loginTotpStep2")}</p>
-                            <img
-                                id="kc-totp-secret-qr-code"
-                                className="size-[150px]"
-                                src={`data:image/png;base64, ${totp.totpSecretQrCode}`}
-                                alt="Figure: Barcode"
-                            />
+                            <figure className="flex w-full justify-center items-center">
+                                <img
+                                    id="kc-totp-secret-qr-code"
+                                    className="size-[180px]"
+                                    src={`data:image/png;base64, ${totp.totpSecretQrCode}`}
+                                    alt="Figure: Barcode"
+                                />
+                            </figure>
                             <br />
                             <p>
                                 <TextLink href={totp.manualUrl} id="mode-manual">
@@ -106,8 +108,8 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
                 </ol>
 
                 <form action={url.loginAction} className="flex flex-col gap-6 mt-4" id="kc-totp-settings-form" method="post">
-                    <div className="flex flex-col gap-6">
-                        <div className="grid gap-4">
+                    <div className="flex flex-col">
+                        <div className="grid gap-2">
                             <Label htmlFor="totp">
                                 {msg("authenticatorCode")} <span className="required">*</span>
                             </Label>
@@ -118,7 +120,7 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
                         {mode && <input type="hidden" id="mode" value={mode} />}
                     </div>
 
-                    <div className="flex flex-col gap-6">
+                    <div className="flex flex-col">
                         <div className="grid gap-2">
                             <Label htmlFor="userLabel">
                                 {msg("loginTotpDeviceName")} {totp.otpCredentials.length >= 1 && <span className="required">*</span>}
@@ -158,7 +160,7 @@ export default function LoginConfigTotp(props: PageProps<Extract<KcContext, { pa
                         </Button>
                     )}
                 </form>
-            </>
+            </div>
         </Template>
     );
 }

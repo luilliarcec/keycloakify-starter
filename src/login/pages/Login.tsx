@@ -38,9 +38,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                     </TextLink>
                 </div>
             }
-            socialProvidersNode={
-                <SocialProvidersButtons social={social} i18n={i18n} realm={realm}></SocialProvidersButtons>
-            }
+            socialProvidersNode={<SocialProvidersButtons social={social} i18n={i18n} realm={realm}></SocialProvidersButtons>}
         >
             <div id="kc-form">
                 <div id="kc-form-wrapper">
@@ -55,14 +53,14 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                             method="post"
                         >
                             {!usernameHidden && (
-                                <div className="flex flex-col gap-6">
+                                <div className="flex flex-col">
                                     <div className="grid gap-2">
                                         <Label htmlFor="username">
                                             {!realm.loginWithEmailAllowed
                                                 ? msg("username")
                                                 : !realm.registrationEmailAsUsername
-                                                  ? msg("usernameOrEmail")
-                                                  : msg("email")}
+                                                    ? msg("usernameOrEmail")
+                                                    : msg("email")}
                                         </Label>
                                         <Input
                                             id="username"
@@ -75,15 +73,13 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                             aria-invalid={messagesPerField.existsError("username", "password")}
                                         />
                                         {messagesPerField.existsError("username", "password") && (
-                                            <InputError>
-                                                {kcSanitize(messagesPerField.getFirstError("username", "password"))}
-                                            </InputError>
+                                            <InputError>{kcSanitize(messagesPerField.getFirstError("username", "password"))}</InputError>
                                         )}
                                     </div>
                                 </div>
                             )}
 
-                            <div className="flex flex-col gap-6">
+                            <div className="flex flex-col">
                                 <div className="grid gap-2">
                                     <div className="flex items-center">
                                         <Label htmlFor="password">{msg("password")}</Label>
@@ -101,9 +97,7 @@ export default function Login(props: PageProps<Extract<KcContext, { pageId: "log
                                         aria-invalid={messagesPerField.existsError("username", "password")}
                                     />
                                     {usernameHidden && messagesPerField.existsError("username", "password") && (
-                                        <InputError>
-                                            {kcSanitize(messagesPerField.getFirstError("username", "password"))}
-                                        </InputError>
+                                        <InputError>{kcSanitize(messagesPerField.getFirstError("username", "password"))}</InputError>
                                     )}
                                 </div>
                             </div>

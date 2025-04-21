@@ -18,8 +18,8 @@ export default function LoginX509Info(props: PageProps<Extract<KcContext, { page
 
     return (
         <Template kcContext={kcContext} i18n={i18n} doUseDefaultCss={doUseDefaultCss} classes={classes} headerNode={msg("doLogIn")}>
-            <form id="kc-x509-login-info" className="flex flex-col gap-6 text-sm text-muted-foreground" action={url.loginAction} method="post">
-                <div className={kcClsx("kcFormGroupClass")}>
+            <form id="kc-x509-login-info" className="flex flex-col gap-6 text-muted-foreground" action={url.loginAction} method="post">
+                <div className="flex flex-col">
                     <div className={kcClsx("kcLabelWrapperClass")}>
                         <label htmlFor="certificate_subjectDN" className={kcClsx("kcLabelClass")}>
                             {msg("clientCertificate")}
@@ -39,7 +39,7 @@ export default function LoginX509Info(props: PageProps<Extract<KcContext, { page
                         </div>
                     )}
                 </div>
-                <div className={kcClsx("kcFormGroupClass")}>
+                <div className="flex flex-col">
                     {x509.formData.isUserEnabled && (
                         <>
                             <div className={kcClsx("kcLabelWrapperClass")}>
@@ -59,7 +59,7 @@ export default function LoginX509Info(props: PageProps<Extract<KcContext, { page
                     <div id="kc-form-options" className={kcClsx("kcFormOptionsClass")}>
                         <div className={kcClsx("kcFormOptionsWrapperClass")} />
                     </div>
-                    <div id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
+                    <div id="kc-form-buttons" className="flex flex-col space-y-2">
                         <Button
                             className="w-full"
                             name="login"
@@ -71,7 +71,7 @@ export default function LoginX509Info(props: PageProps<Extract<KcContext, { page
                         </Button>
                         {x509.formData.isUserEnabled && (
                             <Button
-                                className="w-full mt-2"
+                                className="w-full"
                                 variant="outline"
                                 name="cancel"
                                 id="kc-cancel"

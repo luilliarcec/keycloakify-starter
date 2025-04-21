@@ -27,45 +27,38 @@ export default function LoginOauth2DeviceVerifyUserCode(
             classes={classes}
             headerNode={msg("oauth2DeviceVerificationTitle")}
         >
-            <form
-                id="kc-user-verify-device-user-code-form"
-                className={kcClsx("kcFormClass")}
-                action={url.oauth2DeviceVerificationAction}
-                method="post"
-            >
-                <div className="flex flex-wrap justify-center space-y-4">
-                    <div className="w-full">
+            <form id="kc-user-verify-device-user-code-form" className="flex flex-col gap-6" action={url.oauth2DeviceVerificationAction} method="post">
+                <div className="flex flex-col">
+                    <div className="grid gap-2 justify-items-center">
                         <Label className="text-muted-foreground" htmlFor="device-user-code">
                             {msg("verifyOAuth2DeviceUserCode")}
                         </Label>
-                    </div>
 
-                    <InputOTP id="device-user-code" name="device_user_code" maxLength={6} autoComplete="off" autoFocus>
-                        <InputOTPGroup>
-                            <InputOTPSlot index={0} />
-                            <InputOTPSlot index={1} />
-                            <InputOTPSlot index={2} />
-                        </InputOTPGroup>
-                        <InputOTPSeparator />
-                        <InputOTPGroup>
-                            <InputOTPSlot index={3} />
-                            <InputOTPSlot index={4} />
-                            <InputOTPSlot index={5} />
-                        </InputOTPGroup>
-                    </InputOTP>
+                        <InputOTP id="device-user-code" name="device_user_code" maxLength={6} autoComplete="off" autoFocus>
+                            <InputOTPGroup>
+                                <InputOTPSlot index={0} />
+                                <InputOTPSlot index={1} />
+                                <InputOTPSlot index={2} />
+                            </InputOTPGroup>
+                            <InputOTPSeparator />
+                            <InputOTPGroup>
+                                <InputOTPSlot index={3} />
+                                <InputOTPSlot index={4} />
+                                <InputOTPSlot index={5} />
+                            </InputOTPGroup>
+                        </InputOTP>
+                    </div>
                 </div>
 
-                <div className="mt-10">
-                    <div id="kc-form-options" className={kcClsx("kcFormOptionsClass")}>
-                        <div className={kcClsx("kcFormOptionsWrapperClass")}></div>
-                    </div>
+                <div id="kc-form-options" className={kcClsx("kcFormOptionsClass")}>
+                    <div className={kcClsx("kcFormOptionsWrapperClass")}></div>
+                </div>
 
-                    <div id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
-                        <div className={kcClsx("kcFormButtonsWrapperClass")}>
-                            <Button type="submit" className="w-full">
-                                {msgStr("doSubmit")}
-                            </Button>
-                        </div>
+                <div id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
+                    <div className={kcClsx("kcFormButtonsWrapperClass")}>
+                        <Button type="submit" className="w-full">
+                            {msgStr("doSubmit")}
+                        </Button>
                     </div>
                 </div>
             </form>

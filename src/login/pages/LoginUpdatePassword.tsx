@@ -31,7 +31,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
             headerNode={msg("updatePasswordTitle")}
         >
             <form id="kc-passwd-update-form" className="flex flex-col gap-6" action={url.loginAction} method="post">
-                <div className="flex flex-col gap-6">
+                <div className="flex flex-col">
                     <div className="grid gap-2">
                         <div className="flex items-center">
                             <Label htmlFor="password-new">{msg("passwordNew")}</Label>
@@ -51,7 +51,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                     </div>
                 </div>
 
-                <div className="flex flex-col gap-6">
+                <div className="flex flex-col">
                     <div className="grid gap-2">
                         <div className="flex items-center">
                             <Label htmlFor="password-new">{msg("passwordConfirm")}</Label>
@@ -79,7 +79,7 @@ export default function LoginUpdatePassword(props: PageProps<Extract<KcContext, 
                         </div>
                     </div>
 
-                    <div id="kc-form-buttons" className={kcClsx("kcFormButtonsClass")}>
+                    <div id="kc-form-buttons" className="flex flex-col space-y-2">
                         <Button className="w-full" value={msgStr("doSubmit")} type="submit">
                             {msgStr("doSubmit")}
                         </Button>
