@@ -22,7 +22,7 @@ export default function InputError({ children, asList = false, className = '', .
     }
 
     return (
-        <p {...props} className={cn(baseClassName, className)} dangerouslySetInnerHTML={{ __html: children }}>
-        </p>
+        <div {...props} className={cn(baseClassName, className)} dangerouslySetInnerHTML={{ __html: children }}>
+        </div>
     );
 }
