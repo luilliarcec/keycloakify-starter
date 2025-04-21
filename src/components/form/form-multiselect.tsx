@@ -1,7 +1,8 @@
 import { FormInputProps } from "@/utils/types.ts";
 import {
     getFormInputLabel,
-    getFormOptions
+    getFormOptions,
+    onCheckedChangeHandle
 } from "@/utils/utils.ts";
 import { assert } from "keycloakify/tools/assert";
 import {
@@ -34,7 +35,14 @@ export default function FormMultiselect(props: FormInputProps) {
                     disabled={attribute.readOnly}
                     aria-invalid={displayableErrors.length !== 0}
                 >
-                    {i18n.msg("multiselectPlaceholder", valueOrValues.length.toString())}
+                    {i18n.msg(
+                        "multiselectPlaceholder",
+                        valueOrValues instanceof Array
+                            ? valueOrValues
+                                  .filter(v => v !== "" && v !== undefined && v !== null)
+                                  .length.toString()
+                            : "1"
+                    )}
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-[360px]">
                     {options.map(option => (
@@ -46,25 +54,13 @@ export default function FormMultiselect(props: FormInputProps) {
                                     : valueOrValues === option
                             }
                             onCheckedChange={checked =>
-                                dispatchFormAction({
-                                    action: "update",
-                                    name: attribute.name,
-                                    valueOrValues: (() => {
-                                        if (valueOrValues instanceof Array) {
-                                            const newValues = [...valueOrValues];
-
-                                            if (checked) {
-                                                newValues.push(option);
-                                            } else {
-                                                newValues.splice(newValues.indexOf(option), 1);
-                                            }
-
-                                            return newValues;
-                                        }
-
-                                        return checked ? option : "";
-                                    })()
-                                })
+                                onCheckedChangeHandle(
+                                    option,
+                                    checked,
+                                    dispatchFormAction,
+                                    attribute,
+                                    valueOrValues
+                                )
                             }
                         >
                             {getFormInputLabel(i18n, attribute, option)}

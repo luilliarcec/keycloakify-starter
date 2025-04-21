@@ -1,6 +1,10 @@
 import { FormInputProps } from "@/utils/types.ts";
 import { assert } from "keycloakify/tools/assert";
-import { getFormInputLabel, getFormOptions } from "@/utils/utils.ts";
+import {
+    getFormInputLabel,
+    getFormOptions,
+    onCheckedChangeHandle
+} from "@/utils/utils.ts";
 import { Checkbox } from "@/components/ui/checkbox.tsx";
 import { Label } from "@/components/ui/label.tsx";
 
@@ -28,25 +32,13 @@ export default function FormCheckbox(props: FormInputProps) {
                             : valueOrValues === option
                     }
                     onCheckedChange={checked =>
-                        dispatchFormAction({
-                            action: "update",
-                            name: attribute.name,
-                            valueOrValues: (() => {
-                                if (valueOrValues instanceof Array) {
-                                    const newValues = [...valueOrValues];
-
-                                    if (checked) {
-                                        newValues.push(option);
-                                    } else {
-                                        newValues.splice(newValues.indexOf(option), 1);
-                                    }
-
-                                    return newValues;
-                                }
-
-                                return checked ? option : "";
-                            })()
-                        })
+                        onCheckedChangeHandle(
+                            option,
+                            checked,
+                            dispatchFormAction,
+                            attribute,
+                            valueOrValues
+                        )
                     }
                 />
                 <Label htmlFor={`${attribute.name}-${option}`}>

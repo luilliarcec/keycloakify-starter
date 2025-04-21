@@ -1,5 +1,7 @@
 import type { Attribute } from "keycloakify/login/KcContext";
 import type { I18n } from "@/login/i18n.ts";
+import * as React from "react";
+import type { FormAction } from "keycloakify/login/lib/useUserProfileForm";
 
 export const getFormOptions = (attribute: Attribute): string[] => {
     walk: {
@@ -43,4 +45,32 @@ export const getFormInputLabel = (i18n: I18n, attribute: Attribute, option: stri
     }
 
     return option;
+};
+
+export const onCheckedChangeHandle = (
+    option: string,
+    checked: boolean | "indeterminate",
+    dispatchFormAction: React.Dispatch<FormAction>,
+    attribute: Attribute,
+    valueOrValues: string | string[],
+) => {
+    dispatchFormAction({
+        action: "update",
+        name: attribute.name,
+        valueOrValues: (() => {
+            if (valueOrValues instanceof Array) {
+                const newValues = [...valueOrValues];
+
+                if (checked) {
+                    newValues.push(option);
+                } else {
+                    newValues.splice(newValues.indexOf(option), 1);
+                }
+
+                return newValues;
+            }
+
+            return checked ? option : "";
+        })()
+    });
 };
