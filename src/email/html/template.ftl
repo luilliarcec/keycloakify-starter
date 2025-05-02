@@ -45,6 +45,7 @@
 
         a {
             color: #3869d4;
+            word-break: break-all;
         }
 
         a img {
